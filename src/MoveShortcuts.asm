@@ -33,7 +33,7 @@
 .area EU_22F24E0 - EU_22F2470
 
 ; -----------------
-; Check if L+BXY is pressed and select the corresponding move if it's the case
+; Checks if L+BXY is pressed and selects the corresponding move if it's the case
 ; If Y is pressed, this code also bypasses the X check to open the menu (so it doesn't try to open the menu when Y+X is pressed,
 ; since that's the new shortcut to open the message log)
 ; -----------------
