@@ -22,7 +22,6 @@ ov_29 equ 0x022DCB80
 ; arm9.bin
 .definelabel EU_201367C , 0x201367C
 .definelabel EU_20136A4 , 0x20136A4
-.definelabel EU_2013AF8 , 2013AF8h
 
 ; overlay_0029.bin
 .definelabel EU_22F2470, 0x22F2470
@@ -39,6 +38,7 @@ ov_29 equ 0x022DCB80
 ; Prefixed with fn_ to differentiate them from labels declared inside the hacks
 .definelabel fn_hideGrid, 233836Ch
 .definelabel fn_EU_2025B90, 2025B90h
+.definelabel fn_EU_2013AF8 , 2013AF8h
 
 ; Other
 .definelabel EU_237D294, 237D294h

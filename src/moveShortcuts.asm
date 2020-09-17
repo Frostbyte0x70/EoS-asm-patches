@@ -94,7 +94,7 @@ removeGrid:
 ; -----------------
 .org EU_22F246C
 	; Previous instruction: mov r4,0h
-	b 22F24E0h
+	b EU_22F24E0
 
 ; -----------------
 ; Other buttons hook
@@ -143,7 +143,7 @@ removeGrid:
 .endarea
 ; Move down a couple of instructions from the original code so we can get extra space
 .org EU_20136A4
-	bl EU_2013AF8
+	bl fn_EU_2013AF8
 	add r1,r13,10h
 	;str r5 [r13] - No longer needed since we stored this before
 	
