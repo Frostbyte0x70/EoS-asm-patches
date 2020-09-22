@@ -16,10 +16,10 @@
 ; ----------------------------------------------------------------------
 
 ; This hack allows using each of the leader's 4 moves with L+A, L+B, L+X and L+Y, in that order.
-; The shortcut to open the message log is moved from L+B to Y+X
+; The shortcut to open the message log is moved from L+B to B+Y
 
 ; This file is intended to be used with armips v0.11
-; Required ROM: Explorers of Sky, european version
+; Required ROM: Explorers of Sky (EU/US)
 ; Required files: arm9.bin, overlay_0029.bin
 
 .nds
@@ -34,15 +34,13 @@
 
 ; -----------------
 ; Checks if L+BXY is pressed and selects the corresponding move if it's the case
-; If Y is pressed, this code also bypasses the X check to open the menu (so it doesn't try to open the menu when Y+X is pressed,
-; since that's the new shortcut to open the message log)
 ; -----------------
 moveShortcuts:
 	; Available registers: r0, r1
 	ldr r0,=EU_237D294 ; This value must stay here when returning, since it's needed by the code that checks if X is pressed to open the menu
 	ldrh r1,[r0]
 	tst r1,200h ; Check if L is pressed
-	beq @@noL
+	beq @@ret
 	ldrh r1,[r0,2h]
 	tst r1,2h ; Check if B has been pressed in this frame
 	movne r4,1h
@@ -54,25 +52,10 @@ moveShortcuts:
 	tst r1,800h ; Check if Y has been pressed in this frame
 	movne r4,3h
 	bne EU_22F24E0
-	b @@originalRet; We could branch to 22F26C4h because we know X isn't pressed so it's not necessary to perform the check to open the menu,
+	; Here we could branch to 22F26C4h because we know X isn't pressed so it's not necessary to perform the check to open the menu,
 	; but I'll leave it like this for compatibility
-@@noL:
-	tst r1,800h ; Check if Y is pressed
-	bne EU_22F26C4 ; If so, skip the check to open the menu
-@@originalRet:
+@@ret:
 	bx lr
-
-; -----------------
-; Disables the grid when pressing Y+X to open the message log
-; -----------------
-removeGrid:
-	beq EU_22F2844 ; Original instruction: If X isn't pressed, don't open the message log
-	push r2,lr
-	bl fn_hideGrid ; Hides the grid. Preserves r3-r8.
-	ldr r1,=EU_237D5A6
-	mov r0,0h
-	strb r0,[r1]
-	pop r2,pc
 
 .pool
 .endarea
@@ -103,13 +86,12 @@ removeGrid:
 	bl moveShortcuts
 
 ; -----------------
-; Set Y+X as the message log shortcut
+; Set B+Y as the message log shortcut
 ; -----------------
 .org EU_22F27F8
-	tst r0,800h
+	tst r0,2h
 .org EU_22F2808
-	tst r0,400h
-	bl removeGrid
+	tst r0,800h
 
 .close
 
