@@ -18,12 +18,16 @@
 ; File load addresses
 arm9 equ 0x02000000
 ov_29 equ 0x022DC240
+ov_13 equ 0x0238A140
 
 ; arm9.bin
 .definelabel EU_201367C, 0x20135D4
 .definelabel EU_20136A4, 0x20135FC
 .definelabel EU_204D74C, 0x204D414
 .definelabel EU_204D944, 0x204D60C
+
+; overlay_0013.bin
+.definelabel EU_238C48C, 0x238B94C
 
 ; overlay_0029.bin
 .definelabel EU_22F2470, 0x22F1ABC

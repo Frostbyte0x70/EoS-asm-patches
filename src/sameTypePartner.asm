@@ -15,34 +15,17 @@
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ; ----------------------------------------------------------------------
 
-; File load addresses
-arm9 equ 0x02000000
-ov_29 equ 0x022DCB80
-ov_13 equ 0x0238AC80
+; This hack allows selecting a partner with the same type as the hero after the personality test
 
-; arm9.bin
-.definelabel EU_201367C, 0x201367C
-.definelabel EU_20136A4, 0x20136A4
-.definelabel EU_204D74C, 0x204D74C
-.definelabel EU_204D944, 0x204D944
+; This file is intended to be used with armips v0.11
+; Required ROM: Explorers of Sky (EU/US)
+; Required files: overlay_0013.bin
 
-; overlay_0013.bin
-.definelabel EU_238C48C, 0x238C48C
+.nds
+.include "common/regionSelect.asm"
 
-; overlay_0029.bin
-.definelabel EU_22F2470, 0x22F2470
-.definelabel EU_22F24E0, 0x22F24E0
-.definelabel EU_22F24F0, 0x22F24F0
-.definelabel EU_22F246C, 0x22F246C
-.definelabel EU_22F2694, 0x22F2694
-.definelabel EU_22F27F8, 0x22F27F8
-.definelabel EU_22F2808, 0x22F2808
-.definelabel EU_234DAF0, 0x234DAF0
+.open "overlay_0013.bin", ov_13
+.org EU_238C48C
+	nop
 
-; Functions
-; Prefixed with fn_ to differentiate them from labels declared inside the hacks
-.definelabel fn_EU_2025B90, 2025B90h
-.definelabel fn_EU_2013AF8, 2013AF8h
-
-; Other
-.definelabel EU_237D294, 237D294h
+.close
