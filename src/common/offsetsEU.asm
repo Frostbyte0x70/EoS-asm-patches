@@ -20,8 +20,10 @@ arm9 equ 0x02000000
 ov_29 equ 0x022DCB80
 
 ; arm9.bin
-.definelabel EU_201367C , 0x201367C
-.definelabel EU_20136A4 , 0x20136A4
+.definelabel EU_201367C, 0x201367C
+.definelabel EU_20136A4, 0x20136A4
+.definelabel EU_204D74C, 0x204D74C
+.definelabel EU_204D944, 0x204D944
 
 ; overlay_0029.bin
 .definelabel EU_22F2470, 0x22F2470
@@ -31,11 +33,12 @@ ov_29 equ 0x022DCB80
 .definelabel EU_22F2694, 0x22F2694
 .definelabel EU_22F27F8, 0x22F27F8
 .definelabel EU_22F2808, 0x22F2808
+.definelabel EU_234DAF0, 0x234DAF0
 
 ; Functions
 ; Prefixed with fn_ to differentiate them from labels declared inside the hacks
 .definelabel fn_EU_2025B90, 2025B90h
-.definelabel fn_EU_2013AF8 , 2013AF8h
+.definelabel fn_EU_2013AF8, 2013AF8h
 
 ; Other
 .definelabel EU_237D294, 237D294h
