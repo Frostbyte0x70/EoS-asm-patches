@@ -93,6 +93,40 @@ moveShortcuts:
 .org EU_22F2808
 	tst r0,800h
 
+; -----------------
+; Prevent the bag from opening if the L button is pressed (this can happen if you press L+B but the move associated with the B button can't be used)
+; -----------------
+; In order to get the extra space needed to implement the L check, a section above the place where the game checks if the bag should be opened is optimized
+.org EU_22F26EC
+.area EU_22F2748 - EU_22F26EC
+; Original code shifted up 8 instructions
+	bl fn_EU_22E15F8
+	cmp r0,0h
+	beq @L1
+	mov r0,0h
+	mov r1,1h
+	strb r1,[r13,0B6h]
+	strb r0,[r13,0B7h]
+	strb r0,[r13,0B8h]
+	strb r0,[r13,0B9h]
+	strb r0,[r13,0BAh]
+	b EU_22F3324
+@L1:
+	ldr r1,[EU_22F27A4] ; Change destination register so we can keep this value
+	ldrh r0,[r1,6h]
+	tst r0,2h
+	beq EU_22F2764 ; If B isn't pressed, don't open the bag
+	; Patch: If L is pressed, don't open the bag
+	ldrh r0,[r1]
+	tst r0,200h
+	bne EU_22F2764
+	b EU_22F2748 ; Else jump to the original code and continue normal execution
+.endarea
+
+; Update jump destination to account for the instruction shift
+.org EU_22F26CC
+	beq @L1
+
 .close
 
 ; -----------------

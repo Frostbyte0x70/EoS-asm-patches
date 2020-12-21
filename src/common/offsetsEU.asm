@@ -35,14 +35,24 @@ ov_13 equ 0x0238AC80
 .definelabel EU_22F24F0, 0x22F24F0
 .definelabel EU_22F246C, 0x22F246C
 .definelabel EU_22F2694, 0x22F2694
+.definelabel EU_22F26CC, 0x22F26CC
+.definelabel EU_22F26EC, 0x22F26EC
+.definelabel EU_22F2748, 0x22F2748
+.definelabel EU_22F2764, 0x22F2764
+.definelabel EU_22F27A4, 0x22F27A4
 .definelabel EU_22F27F8, 0x22F27F8
 .definelabel EU_22F2808, 0x22F2808
+.definelabel EU_22F3324, 0x22F3324
 .definelabel EU_234DAF0, 0x234DAF0
 
 ; Functions
 ; Prefixed with fn_ to differentiate them from labels declared inside the hacks
-.definelabel fn_EU_2025B90, 2025B90h
-.definelabel fn_EU_2013AF8, 2013AF8h
+	; arm9.bin
+	.definelabel fn_EU_2013AF8, 2013AF8h
+	.definelabel fn_EU_2025B90, 2025B90h
+
+	; overlay_0029.bin
+	.definelabel fn_EU_22E15F8, 22E15F8h
 
 ; Other
 .definelabel EU_237D294, 237D294h
