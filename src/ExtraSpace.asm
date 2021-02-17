@@ -248,7 +248,7 @@
 	.word ov_36 ; RAM load address
 	.word 0x38F80 ; Overlay size (Size of the empty RAM area)
 	.word 0 ; "Size of BSS data region". Zero I guess?
-	.word ov_36 ; "Static initializer start address". Seems like the game reds every value inside this area and jumps to each one of them if they are not
+	.word ov_36 ; "Static initializer start address". Seems like the game reads every value inside this area and jumps to each one of them if they are not
 				; zero after the overlay is loaded.
 	.word ov_36 + 4 ; "Static initializer end address". The min size is 4
 	.word 24h ; File ID
