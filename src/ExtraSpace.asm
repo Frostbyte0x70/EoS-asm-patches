@@ -24,6 +24,9 @@
 ; Required files: arm9.bin, y9.bin
 ;	In addition, overlay_0036.bin must be present in the ROM with a size of 0x38F80 bytes. The first 4 must be 0.
 
+; Set to 1 to skip patching y9.bin (Useful if you want to edit the overlay list yourself)
+SKIP_Y9 equ 0
+
 .nds
 .include "common/regionSelect.asm"
 
@@ -242,16 +245,18 @@
 ; Overlay list patch
 ; We have to add a new entry to the overlay list for overlay 36
 ; -----------------
-.open "y9.bin", 0
-.org 0x480
-	.word 24h ; Overlay ID
-	.word ov_36 ; RAM load address
-	.word 0x38F80 ; Overlay size (Size of the empty RAM area)
-	.word 0 ; "Size of BSS data region". Zero I guess?
-	.word ov_36 ; "Static initializer start address". Seems like the game reads every value inside this area and jumps to each one of them if they are not
-				; zero after the overlay is loaded.
-	.word ov_36 + 4 ; "Static initializer end address". The min size is 4
-	.word 24h ; File ID
-	.word 0 ; Reserved (Always 0)
-
-.close
+.if SKIP_Y9 != 1
+	.open "y9.bin", 0
+	.org 0x480
+		.word 24h ; Overlay ID
+		.word ov_36 ; RAM load address
+		.word 0x38F80 ; Overlay size (Size of the empty RAM area)
+		.word 0 ; "Size of BSS data region". Zero I guess?
+		.word ov_36 ; "Static initializer start address". Seems like the game reads every value inside this area and jumps to each one of them if they are not
+					; zero after the overlay is loaded.
+		.word ov_36 + 4 ; "Static initializer end address". The min size is 4
+		.word 24h ; File ID
+		.word 0 ; Reserved (Always 0)
+	
+	.close
+.endif
