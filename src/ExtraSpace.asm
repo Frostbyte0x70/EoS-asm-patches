@@ -206,12 +206,18 @@ SKIP_Y9 equ 0
 @loadOverlay36:
 	; Finish loading the previous overlay
 	bl @loadOverlay
+
+	; This function seems to use the same structure as the structure used for fn_getOverlayData and fn_loadOverlayInRam
+	; so it might be something to do after loading each overlay
+	add r0,r13,10h
+	bl fn_EU_2080254
+
 	; Check if we loaded our overlay already. Since the game should never overwrite the RAM area where it's loaded, there's no need to load it
 	; a second time
 	ldr r0,[@ov36AlreadyLoaded]
 	cmp r0,0h
 	; If the overlay has been loaded already, skip the call to the loadOverlay function and continue
-	bne EU_20047A0 + 4
+	bne EU_20047A0 + 12 ; Also skip the call to fn_EU_2080254
 	; Otherwise, set the overlay loaded byte
 	mov r0,1h
 	str r0,[@ov36AlreadyLoaded]
