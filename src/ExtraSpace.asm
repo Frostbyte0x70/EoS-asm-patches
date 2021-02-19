@@ -22,7 +22,7 @@
 ; This file is intended to be used with armips v0.11
 ; Required ROM: Explorers of Sky (EU/US)
 ; Required files: arm9.bin, y9.bin
-;	In addition, overlay_0036.bin must be present in the ROM with a size of 0x38F80 bytes. The first 4 must be 0.
+;	In addition, overlay_0036.bin must be present in the ROM with a size of 0x38F80 bytes.
 
 ; Set to 1 to skip patching y9.bin (Useful if you want to edit the overlay list yourself)
 SKIP_Y9 equ 0
@@ -79,10 +79,10 @@ SKIP_Y9 equ 0
 	add r0,sp,10h+4 ; We need to account for the extra register we pushed
 	bl fn_loadOverlayInRam
 	cmp r0,0h
-	bne @@return
-	mov r0,1h
-	bl fn_loadOverlayFallback
-@@return:
+	moveq r0,1h
+	bleq fn_loadOverlayFallback
+	add r0,sp,10h+4
+	bl fn_EU_2080254 ; Jumps to the static initializer addresses, among other things
 	pop pc
 .endarea
 
@@ -163,10 +163,9 @@ SKIP_Y9 equ 0
 
 .org EU_20047A0
 	; Original code replaced with a call to the new function
-	bl EU_2004180
+	bl @loadOverlay
 	; Move the end of the current function here
-	add r0,r13,10h
-	bl fn_EU_2080254
+@endFunc:
 	bl fn_EU_2008194
 @return:
 	add sp,sp,3Ch
@@ -210,8 +209,8 @@ SKIP_Y9 equ 0
 	; a second time
 	ldr r0,[@ov36AlreadyLoaded]
 	cmp r0,0h
-	; If the overlay has been loaded already, skip the call to the loadOverlay function and continue
-	bne EU_20047A0 + 4
+	; If the overlay has been loaded already, skip to the end of the function
+	bne @endFunc
 	; Otherwise, set the overlay loaded byte
 	mov r0,1h
 	str r0,[@ov36AlreadyLoaded]
@@ -221,12 +220,12 @@ SKIP_Y9 equ 0
 	mov r1,0h
 	bl fn_getOverlayData
 	cmp r0,0h
-	; If everything goes ok, continue normal execution so overlay 36 gets loaded
-	bne EU_20047A0
-	; Otherwise, call the fallback function first
-	mov r0,1h
-	bl fn_loadOverlayFallback
-	b EU_20047A0
+	; If something went wrong, call the fallback function first
+	moveq r0,1h
+	bleq fn_loadOverlayFallback
+	; Load the overlay and continue to the end of the function
+	bl @loadOverlay
+	b @endFunc
 .endarea
 
 ; -----------------
@@ -253,8 +252,8 @@ SKIP_Y9 equ 0
 		.word 0x38F80 ; Overlay size (Size of the empty RAM area)
 		.word 0 ; "Size of BSS data region". Zero I guess?
 		.word ov_36 ; "Static initializer start address". Seems like the game reads every value inside this area and jumps to each one of them if they are not
-					; zero after the overlay is loaded.
-		.word ov_36 + 4 ; "Static initializer end address". The min size is 4
+					; zero after the overlay is loaded, except if the start address is >= than the end address.
+		.word ov_36 ; "Static initializer end address"
 		.word 24h ; File ID
 		.word 0 ; Reserved (Always 0)
 	
