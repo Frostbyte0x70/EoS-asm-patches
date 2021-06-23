@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2020 End45
+; Copyright © 2021 End45
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -19,8 +19,9 @@
 ; The shortcut to open the message log is moved from L+B to B+Y
 
 ; This file is intended to be used with armips v0.11
+; The patch "ExtraSpace.asm" must be applied before this one
 ; Required ROM: Explorers of Sky (EU/US)
-; Required files: arm9.bin, overlay_0029.bin
+; Required files: arm9.bin, overlay_0029.bin, overlay_0036.bin
 
 .nds
 .include "common/regionSelect.asm"
@@ -34,13 +35,17 @@
 
 ; -----------------
 ; Checks if L+BXY is pressed and selects the corresponding move if it's the case
+; Also displays/hides the move dialogue box
 ; -----------------
 moveShortcuts:
-	; Available registers: r0, r1
+	; Available registers: r0-r3
 	ldr r0,=EU_237D294 ; This value must stay here when returning, since it's needed by the code that checks if X is pressed to open the menu
 	ldrh r1,[r0]
 	tst r1,200h ; Check if L is pressed
 	beq @@ret
+	mov r0,r6
+	bl showMoveDB
+	ldr r0,=EU_237D294
 	ldrh r1,[r0,2h]
 	tst r1,2h ; Check if B has been pressed in this frame
 	movne r4,1h
@@ -52,10 +57,21 @@ moveShortcuts:
 	tst r1,800h ; Check if Y has been pressed in this frame
 	movne r4,3h
 	bne EU_22F24E0
-	; Here we could branch to 22F26C4h because we know X isn't pressed so it's not necessary to perform the check to open the menu,
-	; but I'll leave it like this for compatibility
+	tst r1,100h ; Check if R has been pressed in this frame
+	; Check this since we won't check any input after that
+	bne @@throw
+	; Here we directly branch to the end to avoid conflicts with other actions
+	; (move with D-Pad or stylus, open menus, etc.)
+	b EU_22F3318
+@@throw:
+	; Branch to the code that handles throwing rocks
+	bl hideMoveDB
+	b EU_22F2A98
 @@ret:
-	bx lr
+	; If L is not pressed, resume the execution
+	bl hideMoveDB
+	ldr r0,=EU_237D294
+	b afterShortcuts
 
 .pool
 .endarea
@@ -67,7 +83,8 @@ moveShortcuts:
 ; Optimize the code that goes after the area we have overwritten to obtain extra instructions
 ; -----------------
 .org EU_22F24E0
-	mov r3,0h
+	bl checkMoveHook
+
 .org EU_22F24F0
 	movne r0,1h
 	moveq r0,0h
@@ -80,10 +97,17 @@ moveShortcuts:
 	b EU_22F24E0
 
 ; -----------------
+; Hide the dialogue box if L is not pressed but A is
+; -----------------
+.org EU_22F25FC
+	bl hookHideMove
+
+; -----------------
 ; Other buttons hook
 ; -----------------
 .org EU_22F2694
-	bl moveShortcuts
+	b moveShortcuts
+afterShortcuts:
 
 ; -----------------
 ; Set B+Y as the message log shortcut
@@ -163,4 +187,92 @@ moveShortcuts:
 	add r1,r13,10h
 	;str r5 [r13] - No longer needed since we stored this before
 	
+.close
+
+; -----------------
+; Uses overlay 36 to implement additional functions & hooks
+; -----------------
+.open "overlay_0036.bin", ov_36
+
+.org ov_36+500h
+.area ov_36+614h - (ov_36+500h)
+
+showMoveDB: ; Shows the move dialogue box, if hidden
+	push r4,lr
+	mov r4,r0
+	ldr r1,=move_shown
+	ldr r0,[r1]
+	mvn r2,1h
+	cmp r0,r2
+	bne @@ret
+	mov r0,6h
+	mov r1,0h
+	bl fn_setDispMode
+	mov r0,0h
+	bl fn_hideMap
+	mov r0,62h
+	bl fn_waitFrame
+	mov r0,62h
+	bl fn_waitFrame
+	ldr r0,=0x0A120202
+	ldr r1,=EU_209CE8C
+	str r0,[r1]
+	mov r0,r4
+	bl fn_setMoveData
+	mov r0,7h
+	mov r1,0h
+	mov r2,0h
+	bl fn_createMoveMenu
+	ldr r1,=move_shown
+	str r0,[r1]
+@@ret:
+	pop r4,pc
+
+hideMoveDB: ; Hides the move dialogue box, if shown
+	push lr
+	ldr r1,=move_shown
+	ldr r0,[r1]
+	mvn r2,1h
+	cmp r0,r2
+	beq @@ret
+	str r2,[r1]
+	bl fn_deleteMoveMenu
+	bl fn_deallocMoveMenu
+	mov r0,62h
+	bl fn_waitFrame
+	mov r0,62h
+	bl fn_waitFrame
+	mov r0,0h
+	mov r1,r0
+	bl fn_setDispMode
+	ldr r0,=0x0A120D02
+	ldr r1,=EU_209CE8C
+	str r0,[r1]
+@@ret:
+	pop pc
+.pool
+
+hookHideMove:
+	push lr
+	bl hideMoveDB
+	ldr r0,[sp,38h]
+	pop pc
+
+checkMoveHook: ; Checks if the selected move exists and is not part of a link combo
+	push lr
+	add r0,r9,r4,lsl 3h
+	ldrb r1,[r0,124h]
+	tst r1,1h ; Exists
+	addeq sp,sp,4h
+	beq EU_22F3324 ; Don't use if it doesn't exist
+	tst r1,2h ; Is Linked
+	addne sp,sp,4h
+	bne EU_22F3324 ; Don't use if it's linked to the previous move
+	bl hideMoveDB
+	mov r3,0h
+	pop pc
+move_shown:
+	.word 0xFFFFFFFE
+.endarea
+
 .close
