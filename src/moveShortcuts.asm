@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2020 End45
+; Copyright © 2021 End45
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -19,8 +19,9 @@
 ; The shortcut to open the message log is moved from L+B to B+Y
 
 ; This file is intended to be used with armips v0.11
+; The patch "ExtraSpace.asm" must be applied before this one
 ; Required ROM: Explorers of Sky (EU/US)
-; Required files: arm9.bin, overlay_0029.bin
+; Required files: arm9.bin, overlay_0029.bin, overlay_0036.bin
 
 .nds
 .include "common/regionSelect.asm"
@@ -34,14 +35,14 @@
 
 ; -----------------
 ; Checks if L+BXY is pressed and selects the corresponding move if it's the case
-; Also displays/hide the move dialogue box
+; Also displays/hides the move dialogue box
 ; -----------------
 moveShortcuts:
-	; Available registers: r0, r1, r2, r3
+	; Available registers: r0-r3
 	ldr r0,=EU_237D294 ; This value must stay here when returning, since it's needed by the code that checks if X is pressed to open the menu
 	ldrh r1,[r0]
 	tst r1,200h ; Check if L is pressed
-	beq sc_ret
+	beq @@ret
 	mov r0,r6
 	bl showMoveDB
 	ldr r0,=EU_237D294
@@ -58,15 +59,15 @@ moveShortcuts:
 	bne EU_22F24E0
 	tst r1,100h ; Check if R has been pressed in this frame
 	; Check this since we won't check any input after that
-	bne throw
+	bne @@throw
 	; Here we directly branch to the end to avoid conflicts with other actions
 	; (move with D-Pad or stylus, open menus, etc.)
 	b EU_22F3324
-throw:
+@@throw:
 	; Branch to the code that handles throwing rocks
 	bl hideMoveDB
 	b EU_22F2A98
-sc_ret:
+@@ret:
 	; If L is not pressed, resume the execution
 	bl hideMoveDB
 	ldr r0,=EU_237D294
@@ -82,8 +83,7 @@ sc_ret:
 ; Optimize the code that goes after the area we have overwritten to obtain extra instructions
 ; -----------------
 .org EU_22F24E0
-	b checkMoveHook
-endCheckMoveHook:
+	bl checkMoveHook
 
 .org EU_22F24F0
 	movne r0,1h
@@ -96,9 +96,11 @@ endCheckMoveHook:
 	; Previous instruction: mov r4,0h
 	b EU_22F24E0
 
+; -----------------
+; Hide the dialogue box if L is not pressed but A is
+; -----------------
 .org EU_22F25FC
-	b hookHideMove
-endHookHideMove:
+	bl hookHideMove
 
 ; -----------------
 ; Other buttons hook
@@ -188,7 +190,7 @@ afterShortcuts:
 .close
 
 ; -----------------
-; Uses the overlay 36 to implement additional functions & hooks
+; Uses overlay 36 to implement additional functions & hooks
 ; -----------------
 .open "overlay_0036.bin", ov_36
 
@@ -196,75 +198,79 @@ afterShortcuts:
 .area 0x140 ; TODO: check the actual size
 
 showMoveDB: ; Shows the move dialogue box, if hidden
-	stmdb r13!, {r4,r14}
+	push r4,lr
 	mov r4,r0
 	ldr r1,=move_shown
 	ldr r0,[r1]
-	mvn r2,#1
+	mvn r2,1h
 	cmp r0,r2
-	bne end_show
-	mov  r0,#0x6
-	mov  r1,#0x0
+	bne @@ret
+	mov r0,6h
+	mov r1,0h
 	bl fn_setDispMode
-	mov r0, #0
+	mov r0,0h
 	bl fn_hideMap
-	mov  r0,#0x62
+	mov r0,62h
 	bl fn_waitFrame
-	mov  r0,#0x62
+	mov r0,62h
 	bl fn_waitFrame
 	ldr r0,=0x0A120202
 	ldr r1,=EU_209CE8C
 	str r0,[r1]
 	mov r0,r4
 	bl fn_setMoveData
-	mov r0,#0x7
-	mov r1,#0x0
-	mov r2,#0x0
+	mov r0,7h
+	mov r1,0h
+	mov r2,0h
 	bl fn_createMoveMenu
 	ldr r1,=move_shown
 	str r0,[r1]
-end_show:
-	ldmia r13!, {r4,r15}
+@@ret:
+	pop r4,pc
 
 hideMoveDB: ; Hides the move dialogue box, if shown
-	stmdb r13!, {r14}
+	push lr
 	ldr r1,=move_shown
 	ldr r0,[r1]
-	mvn r2,#1
+	mvn r2,1h
 	cmp r0,r2
-	beq end_hide
+	beq @@ret
 	str r2,[r1]
 	bl fn_deleteMoveMenu
 	bl fn_deallocMoveMenu
-	mov  r0,#0x62
+	mov r0,62h
 	bl fn_waitFrame
-	mov  r0,#0x62
+	mov r0,62h
 	bl fn_waitFrame
-	mov  r0,#0x0
-	mov  r1,r0
+	mov r0,0h
+	mov r1,r0
 	bl fn_setDispMode
 	ldr r0,=0x0A120D02
 	ldr r1,=EU_209CE8C
 	str r0,[r1]
-end_hide:
-	ldmia r13!, {r15}
-	.pool
+@@ret:
+	pop pc
+.pool
 
-hookHideMove: ;Hides if L is not pressed (A instead of L+A)
+hookHideMove:
+	push lr
 	bl hideMoveDB
-	ldr r0,[r13, #+0x34]
-	b endHookHideMove
+	ldr r0,[sp,38h]
+	pop pc
 
 checkMoveHook: ; Checks if the selected move exists and is not part of a link combo
-	add r0,r9,r4,lsl #0x3
-	ldrb r1,[r0,#+0x124]
-	tst r1,#0x1 ; Exists
+	push lr
+	add r0,r9,r4,lsl 3h
+	ldrb r1,[r0,124h]
+	tst r1,1h ; Exists
+	addeq sp,sp,4h
 	beq EU_22F3324 ; Don't use if it doesn't exist
-	tst r1,#0x2 ; Is Linked
+	tst r1,2h ; Is Linked
+	addne sp,sp,4h
 	bne EU_22F3324 ; Don't use if it's linked to the previous move
 	bl hideMoveDB
 	mov r3,0h
-	b endCheckMoveHook
+	pop pc
 move_shown:
 	.word 0xFFFFFFFE
 .endarea
