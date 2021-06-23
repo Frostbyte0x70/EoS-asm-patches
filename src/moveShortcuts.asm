@@ -96,6 +96,10 @@ endCheckMoveHook:
 	; Previous instruction: mov r4,0h
 	b EU_22F24E0
 
+.org EU_22F25FC
+	b hookHideMove
+endHookHideMove:
+
 ; -----------------
 ; Other buttons hook
 ; -----------------
@@ -189,7 +193,7 @@ afterShortcuts:
 .open "overlay_0036.bin", ov_36
 
 .org ov_36+480h
-.area 0x100 ; TODO: check the actual size
+.area 0x140 ; TODO: check the actual size
 
 showMoveDB: ; Shows the move dialogue box, if hidden
 	stmdb r13!, {r4,r14}
@@ -245,6 +249,11 @@ hideMoveDB: ; Hides the move dialogue box, if shown
 end_hide:
 	ldmia r13!, {r15}
 	.pool
+
+hookHideMove: ;Hides if L is not pressed (A instead of L+A)
+	bl hideMoveDB
+	ldr r0,[r13, #+0x34]
+	b endHookHideMove
 
 checkMoveHook: ; Checks if the selected move exists and is not part of a link combo
 	add r0,r9,r4,lsl #0x3
