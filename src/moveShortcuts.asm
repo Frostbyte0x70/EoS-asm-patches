@@ -62,7 +62,7 @@ moveShortcuts:
 	bne @@throw
 	; Here we directly branch to the end to avoid conflicts with other actions
 	; (move with D-Pad or stylus, open menus, etc.)
-	b EU_22F3324
+	b EU_22F3318
 @@throw:
 	; Branch to the code that handles throwing rocks
 	bl hideMoveDB
