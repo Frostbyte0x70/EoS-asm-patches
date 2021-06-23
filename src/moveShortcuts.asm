@@ -194,8 +194,8 @@ afterShortcuts:
 ; -----------------
 .open "overlay_0036.bin", ov_36
 
-.org ov_36+480h
-.area 0x140 ; TODO: check the actual size
+.org ov_36+500h
+.area ov_36+614h - (ov_36+500h)
 
 showMoveDB: ; Shows the move dialogue box, if hidden
 	push r4,lr
