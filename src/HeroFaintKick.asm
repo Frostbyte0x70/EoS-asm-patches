@@ -20,7 +20,7 @@
 ; This file is intended to be used with armips v0.11
 ; The patch "ExtraSpace.asm" must be applied before this one
 ; Required ROM: Explorers of Sky (EU/US)
-; Required files: arm9.bin, overlay_0029.bin, overlay_0036.bin
+; Required files: overlay_0029.bin, overlay_0036.bin
 
 .nds
 .include "common/regionSelect.asm"
