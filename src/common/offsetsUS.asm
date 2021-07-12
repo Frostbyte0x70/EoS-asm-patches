@@ -41,9 +41,14 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_20136A4, 0x20135FC
 .definelabel EU_204D74C, 0x204D414
 .definelabel EU_204D944, 0x204D60C
+.definelabel EU_204EED4, 0x204EB9C
+.definelabel EU_204EEE4, 0x204EBAC
+.definelabel EU_204EF00, 0x204EBC8
+.definelabel EU_204F318, 0x204EFE0
 .definelabel EU_20928F0, 0x2092558
 .definelabel EU_2092938, 0x20925A0
 .definelabel EU_209CE8C, 0x209C950
+.definelabel EU_20A2E40, 0x20A28BC
 .definelabel EU_20AFAD0, 0x20AF230
 
 ; overlay_0013.bin
@@ -71,25 +76,28 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_234DAF0, 0x234CEF0
 
 ; Functions
-; Prefixed with fn_ to differentiate them from labels declared inside the hacks
+; Prefixed with fn_ to differentiate them from labels declared inside the patches
 	; arm9.bin
-	.definelabel fn_loadOverlayFallback, 0x2003D2C
-	.definelabel fn_EU_2008194, 0x2008194
-	.definelabel fn_EU_2013AF8, 2013A50h
-	.definelabel fn_EU_2025B90, 20258C4h
-	.definelabel fn_deleteMoveMenu, 0x2030850
-	.definelabel fn_setMoveData, 0x203F9CC
-	.definelabel fn_createMoveMenu, 0x204018C
-	.definelabel fn_deallocMoveMenu, 0x20407C0
-	.definelabel fn_getOverlayData, 0x207FC9C
-	.definelabel fn_loadOverlayInRam, 0x207FD98
-	.definelabel fn_EU_2080254, 0x207FEBC
+	.definelabel fn_loadOverlayFallback,    2003D2Ch
+	.definelabel fn_EU_2008194,             2008194h
+	.definelabel fn_EU_2013AF8,             2013A50h
+	.definelabel fn_EU_2025B90,             20258C4h
+	.definelabel fn_deleteMoveMenu,         2030850h
+	.definelabel fn_setMoveData,            203F9CCh
+	.definelabel fn_createMoveMenu,         204018Ch
+	.definelabel fn_deallocMoveMenu,        20407C0h
+	.definelabel fn_getGroundVar,           204B4ECh
+	.definelabel fn_getPerfomanceProgress,  204CA94h
+	.definelabel fn_addExtraPokemon,        204F8E0h
+	.definelabel fn_getOverlayData,         207FC9Ch
+	.definelabel fn_loadOverlayInRam,       207FD98h
+	.definelabel fn_EU_2080254,             207FEBCh
 
 	; overlay_0029.bin
-	.definelabel fn_EU_22E15F8, 22E0CB8h
-	.definelabel fn_waitFrame, 0x22E9FE0
-	.definelabel fn_setDispMode, 0x22EA428
-	.definelabel fn_hideMap, 0x233A248
+	.definelabel fn_EU_22E15F8,             22E0CB8h
+	.definelabel fn_waitFrame,              22E9FE0h
+	.definelabel fn_setDispMode,            22EA428h
+	.definelabel fn_hideMap,                233A248h
 
 ; Other
 .definelabel EU_237D294, 237C694h
