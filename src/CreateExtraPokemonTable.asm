@@ -71,8 +71,13 @@ createTable:
 	ldr r0,[r0,4h]
 	mvn r1,0h
 	cmp r0,r1
-	beq @@checkR4
-	orr r2,r2,r0,lsl 8h
+	orrne r2,r2,r0,lsl 8h
+	; [data+8] = 1 means SIDE01_BOSS2ND was checked
+	add r0,=data
+	ldrb r0,[r0,8h]
+	cmp r0,1h
+	moveq r0,8000h
+	orreq r2,r2,r0
 @@checkR4:
 	; r4 = 1 means Hidden Land restrictions have been enabled
 	cmp r4,1h
@@ -81,12 +86,6 @@ createTable:
 	; r5 = 1 means recruitment has been disabled
 	cmp r5,1h
 	moveq r0,40h
-	orreq r2,r2,r0
-	; [data+8] = 1 means SIDE01_BOSS2ND was checked
-	add r0,=data
-	ldrb r0,[r0,8h]
-	cmp r0,1h
-	moveq r0,8000h
 	orreq r2,r2,r0
 	; If the dungeon ID is between 0x26 and 0x2B (Hidden Land - Temporal Pinnacle), we have to enable Hidden Land restrictions
 	; on subsequent visits to the dungeon
