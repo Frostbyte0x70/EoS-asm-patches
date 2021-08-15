@@ -2,7 +2,7 @@
 This repository contains my asm patches for Explorers of Sky.
 
 ## Usage
-In order to apply a patch to a ROM you have to extract the ROM first (you will need [ndstool](https://github.com/devkitPro/ndstool) or any other similar program for that). Next, you can apply the patch using [armips](https://github.com/Kingcom/armips). Using this system over the typical binary patch method allows you to make changes to the code if you wish.
+In order to apply a patch to a ROM you have to extract the ROM first (you will need [ndstool](https://github.com/devkitPro/ndstool), [tinke](https://github.com/pleonex/tinke) or any other similar program for that). Next, you can apply the patch using [armips](https://github.com/Kingcom/armips). Using this system over the typical binary patch method allows you to make changes to the code if you wish.
 
 Put the armips executable and the source .asm file that contains the patch in the same folder. You will also need to have the `common` folder in there, since it's requiered for my patches to work.
 
