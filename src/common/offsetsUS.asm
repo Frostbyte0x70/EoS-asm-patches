@@ -22,8 +22,6 @@ ov_13 equ 0x0238A140
 ov_36 equ 0x023A7080 ; Extra overlay
 
 ; arm9.bin
-.definelabel EU_20011F0, 0x20015B8
-.definelabel EU_2001238, 0x20015DC
 .definelabel EU_20040F8, 0x20040F8
 .definelabel EU_2004158, 0x2004158
 .definelabel EU_200415C, 0x200415C
@@ -43,15 +41,9 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_20136A4, 0x20135FC
 .definelabel EU_204D74C, 0x204D414
 .definelabel EU_204D944, 0x204D60C
-.definelabel EU_204EED4, 0x204EB9C
-.definelabel EU_204EEE4, 0x204EBAC
-.definelabel EU_204EF00, 0x204EBC8
-.definelabel EU_204F318, 0x204EFE0
 .definelabel EU_20928F0, 0x2092558
 .definelabel EU_2092938, 0x20925A0
 .definelabel EU_209CE8C, 0x209C950
-.definelabel EU_20A2E40, 0x20A28BC
-.definelabel EU_20AF7A8, 0x20AEF08
 .definelabel EU_20AFAD0, 0x20AF230
 
 ; overlay_0013.bin
@@ -76,31 +68,32 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_22F3324, 0x22F2970
 .definelabel EU_22F8A40, 0x22F8034
 .definelabel EU_230E5D8, 0x230DB64
+.definelabel EU_23118B8, 0x2310E58
+.definelabel EU_2311A60, 0x2311000
+.definelabel EU_23118E0, 0x2310E80
 .definelabel EU_234DAF0, 0x234CEF0
 
 ; Functions
-; Prefixed with fn_ to differentiate them from labels declared inside the patches
+; Prefixed with fn_ to differentiate them from labels declared inside the hacks
 	; arm9.bin
-	.definelabel fn_loadOverlayFallback,    2003D2Ch
-	.definelabel fn_EU_2008194,             2008194h
-	.definelabel fn_EU_2013AF8,             2013A50h
-	.definelabel fn_EU_2025B90,             20258C4h
-	.definelabel fn_deleteMoveMenu,         2030850h
-	.definelabel fn_setMoveData,            203F9CCh
-	.definelabel fn_createMoveMenu,         204018Ch
-	.definelabel fn_deallocMoveMenu,        20407C0h
-	.definelabel fn_getGroundVar,           204B4ECh
-	.definelabel fn_getPerfomanceProgress,  204CA94h
-	.definelabel fn_addExtraPokemon,        204F8E0h
-	.definelabel fn_getOverlayData,         207FC9Ch
-	.definelabel fn_loadOverlayInRam,       207FD98h
-	.definelabel fn_EU_2080254,             207FEBCh
+	.definelabel fn_loadOverlayFallback, 0x2003D2C
+	.definelabel fn_EU_2008194, 0x2008194
+	.definelabel fn_EU_2013AF8, 2013A50h
+	.definelabel fn_EU_2025B90, 20258C4h
+	.definelabel fn_deleteMoveMenu, 0x2030850
+	.definelabel fn_setMoveData, 0x203F9CC
+	.definelabel fn_createMoveMenu, 0x204018C
+	.definelabel fn_deallocMoveMenu, 0x20407C0
+	.definelabel fn_getOverlayData, 0x207FC9C
+	.definelabel fn_loadOverlayInRam, 0x207FD98
+	.definelabel fn_EU_2080254, 0x207FEBC
 
 	; overlay_0029.bin
-	.definelabel fn_EU_22E15F8,             22E0CB8h
-	.definelabel fn_waitFrame,              22E9FE0h
-	.definelabel fn_setDispMode,            22EA428h
-	.definelabel fn_hideMap,                233A248h
+	.definelabel fn_EU_22E15F8, 22E0CB8h
+	.definelabel fn_waitFrame, 0x22E9FE0
+	.definelabel fn_setDispMode, 0x22EA428
+	.definelabel fn_hideMap, 0x233A248
+	.definelabel fn_sendMessageWithIDCheckULog, 0x234B2A4
 
 ; Other
 .definelabel EU_237D294, 237C694h
