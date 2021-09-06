@@ -41,9 +41,20 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_20136A4, 0x20135FC
 .definelabel EU_204D74C, 0x204D414
 .definelabel EU_204D944, 0x204D60C
+.definelabel EU_205909C, 0x2058D20
+.definelabel EU_20590AC, 0x2058D30
+.definelabel EU_20590D8, 0x2058D5C
+.definelabel EU_20590E4, 0x2058D68
+.definelabel EU_20590EC, 0x2058D70
+.definelabel EU_20590F0, 0x2058D74
+.definelabel EU_20591E4, 0x2058E68
+.definelabel EU_20592A0, 0x2058F24
+.definelabel EU_20592B0, 0x2058F34
+.definelabel EU_205931C, 0x2058FA0
 .definelabel EU_20928F0, 0x2092558
 .definelabel EU_2092938, 0x20925A0
 .definelabel EU_209CE8C, 0x209C950
+.definelabel EU_20A2314, 0x20A1D90
 .definelabel EU_20AFAD0, 0x20AF230
 
 ; overlay_0013.bin
@@ -67,6 +78,17 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_22F3318, 0x22F2964
 .definelabel EU_22F3324, 0x22F2970
 .definelabel EU_22F8A40, 0x22F8034
+.definelabel EU_2302A18, 0x2301FEC
+.definelabel EU_2302A2C, 0x2302000
+.definelabel EU_2302A3C, 0x2302010
+.definelabel EU_2302A48, 0x230201C
+.definelabel EU_2302A54, 0x2302028
+.definelabel EU_2302A58, 0x230202C
+.definelabel EU_2302B58, 0x230212C
+.definelabel EU_2302B6C, 0x2302140
+.definelabel EU_2302B90, 0x2302164
+.definelabel EU_2302B9C, 0x2302170
+.definelabel EU_2302BA0, 0x2302174
 .definelabel EU_230E5D8, 0x230DB64
 .definelabel EU_23118B8, 0x2310E58
 .definelabel EU_2311A60, 0x2311000
@@ -84,6 +106,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 	.definelabel fn_setMoveData,                0x203F9CC
 	.definelabel fn_createMoveMenu,             0x204018C
 	.definelabel fn_deallocMoveMenu,            0x20407C0
+	.definelabel fn_getSpeciesIQGroup,          0x2052B28
 	.definelabel fn_getOverlayData,             0x207FC9C
 	.definelabel fn_loadOverlayInRam,           0x207FD98
 	.definelabel fn_EU_2080254,                 0x207FEBC
