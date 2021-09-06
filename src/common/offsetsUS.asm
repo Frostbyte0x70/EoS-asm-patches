@@ -76,23 +76,23 @@ ov_36 equ 0x023A7080 ; Extra overlay
 ; Functions
 ; Prefixed with fn_ to differentiate them from labels declared inside the hacks
 	; arm9.bin
-	.definelabel fn_loadOverlayFallback, 0x2003D2C
-	.definelabel fn_EU_2008194, 0x2008194
-	.definelabel fn_EU_2013AF8, 2013A50h
-	.definelabel fn_EU_2025B90, 20258C4h
-	.definelabel fn_deleteMoveMenu, 0x2030850
-	.definelabel fn_setMoveData, 0x203F9CC
-	.definelabel fn_createMoveMenu, 0x204018C
-	.definelabel fn_deallocMoveMenu, 0x20407C0
-	.definelabel fn_getOverlayData, 0x207FC9C
-	.definelabel fn_loadOverlayInRam, 0x207FD98
-	.definelabel fn_EU_2080254, 0x207FEBC
+	.definelabel fn_loadOverlayFallback,        0x2003D2C
+	.definelabel fn_EU_2008194,                 0x2008194
+	.definelabel fn_EU_2013AF8,                 0x2013A50
+	.definelabel fn_EU_2025B90,                 0x20258C4
+	.definelabel fn_deleteMoveMenu,             0x2030850
+	.definelabel fn_setMoveData,                0x203F9CC
+	.definelabel fn_createMoveMenu,             0x204018C
+	.definelabel fn_deallocMoveMenu,            0x20407C0
+	.definelabel fn_getOverlayData,             0x207FC9C
+	.definelabel fn_loadOverlayInRam,           0x207FD98
+	.definelabel fn_EU_2080254,                 0x207FEBC
 
 	; overlay_0029.bin
-	.definelabel fn_EU_22E15F8, 22E0CB8h
-	.definelabel fn_waitFrame, 0x22E9FE0
-	.definelabel fn_setDispMode, 0x22EA428
-	.definelabel fn_hideMap, 0x233A248
+	.definelabel fn_EU_22E15F8,                 0x22E0CB8
+	.definelabel fn_waitFrame,                  0x22E9FE0
+	.definelabel fn_setDispMode,                0x22EA428
+	.definelabel fn_hideMap,                    0x233A248
 	.definelabel fn_sendMessageWithIDCheckULog, 0x234B2A4
 
 ; Other
