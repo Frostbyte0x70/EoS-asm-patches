@@ -30,7 +30,7 @@
 .area 0x20A1058 - 0x209FD60
 result:
 	; Area where the result will be written
-	.fill 9 * 15, 0
+	.fill 9 * 16, 0
 .align 4
 
 ; -----------------
@@ -66,7 +66,7 @@ createArray:
 @@nextIterGroup:
 	add r6,r6,1h
 	add r5,r5,9h
-	cmp r6,0Fh
+	cmp r6,10h
 	blt @@groupLoop
 .ascii "CRASH GOES HERE"
 .pool
