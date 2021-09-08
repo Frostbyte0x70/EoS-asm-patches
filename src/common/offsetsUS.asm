@@ -86,6 +86,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_2302A58, 0x230202C
 .definelabel EU_2302B58, 0x230212C
 .definelabel EU_2302B6C, 0x2302140
+.definelabel EU_2302B7C, 0x2302150
 .definelabel EU_2302B90, 0x2302164
 .definelabel EU_2302B9C, 0x2302170
 .definelabel EU_2302BA0, 0x2302174

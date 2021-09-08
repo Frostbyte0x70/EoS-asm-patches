@@ -160,6 +160,8 @@ arrayContainsSkill:
 	nop
 .org EU_2302B6C
 	mov r1,r6
+.org EU_2302B7C
+	mov r1,r6
 .org EU_2302B90
 	mov r1,r6
 .org EU_2302BA0
