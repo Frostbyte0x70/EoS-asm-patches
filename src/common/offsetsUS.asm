@@ -22,6 +22,8 @@ ov_13 equ 0x0238A140
 ov_36 equ 0x023A7080 ; Extra overlay
 
 ; arm9.bin
+.definelabel EU_20011F0, 0x20015B8
+.definelabel EU_2001238, 0x20015DC
 .definelabel EU_20040F8, 0x20040F8
 .definelabel EU_2004158, 0x2004158
 .definelabel EU_200415C, 0x200415C
@@ -41,6 +43,10 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_20136A4, 0x20135FC
 .definelabel EU_204D74C, 0x204D414
 .definelabel EU_204D944, 0x204D60C
+.definelabel EU_204EED4, 0x204EB9C
+.definelabel EU_204EEE4, 0x204EBAC
+.definelabel EU_204EF00, 0x204EBC8
+.definelabel EU_204F318, 0x204EFE0
 .definelabel EU_205909C, 0x2058D20
 .definelabel EU_20590AC, 0x2058D30
 .definelabel EU_20590D8, 0x2058D5C
@@ -55,6 +61,8 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_2092938, 0x20925A0
 .definelabel EU_209CE8C, 0x209C950
 .definelabel EU_20A2314, 0x20A1D90
+.definelabel EU_20A2E40, 0x20A28BC
+.definelabel EU_20AF7A8, 0x20AEF08
 .definelabel EU_20AFAD0, 0x20AF230
 
 ; overlay_0013.bin
@@ -97,7 +105,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_234DAF0, 0x234CEF0
 
 ; Functions
-; Prefixed with fn_ to differentiate them from labels declared inside the hacks
+; Prefixed with fn_ to differentiate them from labels declared inside the patches
 	; arm9.bin
 	.definelabel fn_loadOverlayFallback,        0x2003D2C
 	.definelabel fn_EU_2008194,                 0x2008194
@@ -107,6 +115,9 @@ ov_36 equ 0x023A7080 ; Extra overlay
 	.definelabel fn_setMoveData,                0x203F9CC
 	.definelabel fn_createMoveMenu,             0x204018C
 	.definelabel fn_deallocMoveMenu,            0x20407C0
+	.definelabel fn_getGroundVar,               0x204B4EC
+	.definelabel fn_getPerfomanceProgress,      0x204CA94
+	.definelabel fn_addExtraPokemon,            0x204F8E0
 	.definelabel fn_getSpeciesIQGroup,          0x2052B28
 	.definelabel fn_getOverlayData,             0x207FC9C
 	.definelabel fn_loadOverlayInRam,           0x207FD98
