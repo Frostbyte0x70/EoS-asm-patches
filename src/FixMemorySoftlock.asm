@@ -31,16 +31,18 @@
 
 .open "overlay_0036.bin", ov_36
 .orga 0x780
-.area 0x68
+.area 0x94
 ; -----------------
 ; Finds the biggest free entry in the specified memory table and returns its index. If there isn't a free entry in the table, crashes the game.
 ; Parameters:
+; r0: Address to jump to if a free entry is found
 ; r4: Pointer to the memory table to check
 ; r5: Size of the block that must be allocated
 ; Ret r1: Index inside the table where the block should be allocated
 ; -----------------
 forceAllocate:
-	push r6,lr
+	push r6,r7,lr
+	mov r7,r0
 	ldr r1,[r4,0Ch] ; r1: Number of entries in the table
 	ldr r0,[r4,8h] ; r0: Entries data start address
 	subs r2,r1,1h
@@ -69,12 +71,29 @@ forceAllocate:
 	bge @@loop
 	; Check if we found a free slot
 	cmp r1,0h
-	popge r6,lr
-	bge EU_20011F0
+	movge r0,r7
+	popge r6,r7,lr
+	bxge r0
 @@noSpace:
 	; If we get here, there are no free entries in the table. Return nothing and let the game crash.
 	ldr r0,=EU_20AF7A8 ; Original instruction
-	pop r6,pc
+	pop r6,r7,pc
+
+
+; -----------------
+; Functions called to initialize the required values for forceAllocate
+; -----------------
+preForceAllocate1:
+	ldr r0,=EU_20011F0
+	mov r1,r4
+	mov r4,r5
+	mov r5,r1
+	b forceAllocate
+
+preForceAllocate2:
+	ldr r0,=EU_20015B8
+	b forceAllocate
+
 .pool
 .endarea
 
@@ -82,9 +101,12 @@ forceAllocate:
 
 .open "arm9.bin", arm9
 ; -----------------
-; forceAllocate hook
+; forceAllocate hooks
 ; -----------------
 .org EU_2001238
-	bl forceAllocate
+	bl preForceAllocate1
+
+.org EU_20015DC
+	bl preForceAllocate2
 
 .close
