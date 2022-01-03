@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2021 End45
+; Copyright © 2022 End45
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -71,6 +71,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_238C48C, 0x238B94C
 
 ; overlay_0029.bin
+.definelabel EU_22F2424, 0x22F1A70
 .definelabel EU_22F2470, 0x22F1ABC
 .definelabel EU_22F24E0, 0x22F1B2C
 .definelabel EU_22F24F0, 0x22F1B3C

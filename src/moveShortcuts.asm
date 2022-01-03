@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2021 End45
+; Copyright © 2022 End45
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -151,6 +151,13 @@ afterShortcuts:
 .org EU_22F26CC
 	beq @L1
 
+
+; -----------------
+; Hide the dialogue box if stench is active
+; -----------------
+.org EU_22F2424
+    bl hookHideMoveStench
+
 .close
 
 ; -----------------
@@ -195,7 +202,7 @@ afterShortcuts:
 .open "overlay_0036.bin", ov_36
 
 .org ov_36+500h
-.area ov_36+614h - (ov_36+500h)
+.area ov_36+62Ch - (ov_36+500h)
 
 showMoveDB: ; Shows the move dialogue box, if hidden
 	push r4,lr
@@ -273,6 +280,15 @@ checkMoveHook: ; Checks if the selected move exists and is not part of a link co
 	pop pc
 move_shown:
 	.word 0xFFFFFFFE
+
+hookHideMoveStench:
+    push r4,lr
+    mov r4,r0
+    cmp r4,0h
+    blne hideMoveDB
+    cmp r4,0h
+    pop r4,pc
+
 .endarea
 
 .close
