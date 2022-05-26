@@ -158,6 +158,39 @@ afterShortcuts:
 .org EU_22F2424
     bl hookHideMoveStench
 
+; -----------------
+; Prevent passing turn by pressing A+B if the move dialogue box is open
+; -----------------
+.org EU_22F1D18
+.area 0x22F1D3C - .
+	ldr r0,=move_shown
+	ldr r0,[r0]
+	mvn r1,1h
+	cmp r0,r1
+	bne EU_22F1D64
+	; Original code, optimized
+	ldr r0,[sp,8Ch]
+	ldr r0,[r0,46h]
+	b @@afterPool
+.pool
+@@afterPool:
+.endarea
+
+.org EU_22F23CC
+.area 0x22F23F0 - .
+	ldr r0,=move_shown
+	ldr r0,[r0]
+	mvn r1,1h
+	cmp r0,r1
+	bne EU_22F2418
+	; Original code, optimized
+	ldr r0,[sp,8Ch]
+	ldr r0,[r0,46h]
+	b @@afterPool
+.pool
+@@afterPool:
+.endarea
+
 .close
 
 ; -----------------
