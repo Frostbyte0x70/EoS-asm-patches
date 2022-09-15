@@ -18,6 +18,7 @@
 ; File load addresses
 arm9 equ 0x02000000
 ov_29 equ 0x022DC240
+ov_11 equ 0x022DC240
 ov_13 equ 0x0238A140
 ov_36 equ 0x023A7080 ; Extra overlay
 
@@ -68,6 +69,11 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_20A2E40, 0x20A28BC
 .definelabel EU_20AF7A8, 0x20AEF08
 .definelabel EU_20AFAD0, 0x20AF230
+
+; overlay_0011.bin
+.definelabel EU_22DDA70, 0x22DD130
+.definelabel EU_22E4C94, 0x22E4354
+.definelabel EU_23259C0, 0x2324E80
 
 ; overlay_0013.bin
 .definelabel EU_238C48C, 0x238B94C
