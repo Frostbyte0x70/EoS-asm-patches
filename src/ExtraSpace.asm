@@ -251,9 +251,11 @@ SKIP_Y9 equ 0
 		.word ov_36 ; RAM load address
 		.word 0x38F80 ; Overlay size (Size of the empty RAM area)
 		.word 0 ; "Size of BSS data region". Zero I guess?
-		.word ov_36 ; "Static initializer start address". Seems like the game reads every value inside this area and jumps to each one of them if they are not
-					; zero after the overlay is loaded, except if the start address is >= than the end address.
-		.word ov_36 ; "Static initializer end address"
+		; Static initializer start address. Start of an array that can be used by other projects that make use of this patch to
+		; run some init code when the overlay is loaded.
+		.word ov_36 + 0xC40
+		; Static initializer end address. The array has 32 slots in total, which should be more than enough.
+		.word ov_36 + 0xCC0
 		.word 24h ; File ID
 		.word 0 ; Reserved (Always 0)
 	
