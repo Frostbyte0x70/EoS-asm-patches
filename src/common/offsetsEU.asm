@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2022 End45
+; Copyright © 2023 End45
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -115,16 +115,21 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_2302B90, 0x2302B90
 .definelabel EU_2302B9C, 0x2302B9C
 .definelabel EU_2302BA0, 0x2302BA0
+.definelabel EU_230338C, 0x230338C
+.definelabel EU_2304544, 0x2304544
+.definelabel EU_230A614, 0x230A614
 .definelabel EU_230E5D8, 0x230E5D8
 .definelabel EU_23118B8, 0x23118B8
 .definelabel EU_2311A60, 0x2311A60
 .definelabel EU_23118E0, 0x23118E0
+.definelabel EU_231873C, 0x231873C
+.definelabel EU_23187A0, 0x23187A0
 .definelabel EU_2344A54, 0x2344A54
 .definelabel EU_2344AA0, 0x2344AA0
 .definelabel EU_234DAF0, 0x234DAF0
+.definelabel EU_2354138, 0x2354138
 
 ; Functions
-; Prefixed with fn_ to differentiate them from labels declared inside the patches
 	; arm9.bin
 	.definelabel fn_loadOverlayFallback,        0x2003D2C
 	.definelabel fn_EU_2008194,                 0x2008194
@@ -137,6 +142,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 	.definelabel fn_getGroundVar,               0x204B824
 	.definelabel fn_getPerfomanceProgress,      0x204CDCC
 	.definelabel fn_addExtraPokemon,            0x204FC18
+	.definelabel CanEnemyEvolve,                0x2051738
 	.definelabel fn_getSpeciesIQGroup,          0x2052E60
 	.definelabel fn_getOverlayData,             0x2080034
 	.definelabel fn_loadOverlayInRam,           0x2080130
@@ -146,8 +152,13 @@ ov_36 equ 0x023A7080 ; Extra overlay
 	.definelabel fn_EU_22E15F8,                 0x22E15F8
 	.definelabel fn_waitFrame,                  0x22EA990
 	.definelabel fn_setDispMode,                0x22EADD8
+	.definelabel EvolveMonster,                 0x23046A8
+	.definelabel RestoreMovePP,                 0x2318680
 	.definelabel fn_hideMap,                    0x233AE2C
 	.definelabel fn_sendMessageWithIDCheckULog, 0x234BEA4
 
 ; Other
 .definelabel EU_237D294, 237D294h
+
+; Registers
+ApplyDamageAttackerRegister equ r10
