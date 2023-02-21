@@ -162,30 +162,34 @@ afterShortcuts:
 ; Prevent passing turn by pressing A+B if the move dialogue box is open
 ; -----------------
 .org EU_22F1D18
-.area 0x22F1D3C - .
+.area 0x22F1D44 - .
 	ldr r0,=move_shown
 	ldr r0,[r0]
 	mvn r1,1h
 	cmp r0,r1
 	bne EU_22F1D64
 	; Original code, optimized
-	ldr r0,[sp,8Ch]
-	ldr r0,[r0,46h]
+	ldr r1,[sp,8Ch]
+	ldrh r0,[r1,46h]
+	ldrh r1,[r1,48h]
+	orrs r0,r0,r1 ; OR the belly and belly thousandths together to check if they are both zero
 	b @@afterPool
 .pool
 @@afterPool:
 .endarea
 
 .org EU_22F23CC
-.area 0x22F23F0 - .
+.area 0x22F23F8 - .
 	ldr r0,=move_shown
 	ldr r0,[r0]
 	mvn r1,1h
 	cmp r0,r1
 	bne EU_22F2418
 	; Original code, optimized
-	ldr r0,[sp,8Ch]
-	ldr r0,[r0,46h]
+	ldr r1,[sp,8Ch]
+	ldrh r0,[r1,46h]
+	ldrh r1,[r1,48h]
+	orrs r0,r0,r1 ; OR the belly and belly thousandths together to check if they are both zero
 	b @@afterPool
 .pool
 @@afterPool:
