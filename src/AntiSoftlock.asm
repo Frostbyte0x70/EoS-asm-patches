@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2022 End45
+; Copyright © 2023 End45
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ checkButtons:
 	tst r0,3h
 	bne @@ret
 	; Check DS button inputs (X and Y)
-	ldr r0,=0x2FFFFA8
+	ldr r0,=0x27FFFA8
 	ldrh r0,[r0]
 	tst r0,0C00h
 	bne @@ret
