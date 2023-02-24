@@ -34,7 +34,7 @@
 
 .open "overlay_0036.bin", ov_36
 
-.orga 0x30F70; TODO
+.orga 0x11A0
 .area 0x148
 ; -----------------
 ; Evolves an enemy.
