@@ -35,7 +35,7 @@
 .open "overlay_0036.bin", ov_36
 
 .orga 0x11A0
-.area 0x148
+.area 0x150
 ; -----------------
 ; Evolves an enemy.
 ; If _UpdateStats is != 0, the stats of the enemy are set to the stats of its evolution. The level is also updated.
@@ -93,6 +93,10 @@ evolve:
 	ldrh r2,[r6,2h] ; 2 bytes
 	strb r2,[r5,0Ah]
 .endif
+	; EvolveMonster sets the EXP of the pokémon to the amount it should have at its current level. We set it back to 0 since enemies aren't supposed to have EXP.
+	; (This can also cause enemies to unexpectedly level up if the level was changed above)
+	mov r0,0h
+	str r0,[r5,20h]
 .if _FullHeal != 0
 	ldrsh r2,[r5,12h]
 	ldrsh r3,[r5,16h]
