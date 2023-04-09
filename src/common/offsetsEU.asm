@@ -119,6 +119,8 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_2304544, 0x2304544
 .definelabel EU_230A614, 0x230A614
 .definelabel EU_230E5D8, 0x230E5D8
+.definelabel EU_2310C54, 0x2310C54
+.definelabel EU_2310CF0, 0x2310CF0
 .definelabel EU_23118B8, 0x23118B8
 .definelabel EU_2311A60, 0x2311A60
 .definelabel EU_23118E0, 0x23118E0
@@ -126,6 +128,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_23187A0, 0x23187A0
 .definelabel EU_2344A54, 0x2344A54
 .definelabel EU_2344AA0, 0x2344AA0
+.definelabel EU_234C2FC, 0x234C2FC
 .definelabel EU_234DAF0, 0x234DAF0
 .definelabel EU_2354138, 0x2354138
 
@@ -154,6 +157,8 @@ ov_36 equ 0x023A7080 ; Extra overlay
 	.definelabel fn_setDispMode,                0x22EADD8
 	.definelabel EvolveMonster,                 0x23046A8
 	.definelabel RestoreMovePP,                 0x2318680
+	.definelabel fn_EU_22F399C,                 0x22F399C
+	.definelabel fn_EU_230DB90,                 0x230DB90
 	.definelabel fn_hideMap,                    0x233AE2C
 	.definelabel fn_sendMessageWithIDCheckULog, 0x234BEA4
 
