@@ -198,6 +198,18 @@ afterShortcuts:
 .close
 
 ; -----------------
+; Remove "Set"/"Deselect" options from move menu
+; -----------------
+.open "overlay_0031.bin", ov_31
+.org US_2385798
+	mov r0,r0
+	mov r0,r0
+.org US_23857A4
+	mov r0,r0
+	mov r0,r0
+.close
+
+; -----------------
 ; Patch: Show a button icon next to the move names indicating which button each move is associated with
 ; (replaces the checkmark that used to indicate that a move was set)
 ; -----------------
