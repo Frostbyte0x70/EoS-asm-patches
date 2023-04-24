@@ -210,6 +210,17 @@ afterShortcuts:
 .close
 
 ; -----------------
+; Remove "Set move"/"Deselect" options from Electivire menus
+; -----------------
+.open "overlay_0018.bin", ov_18
+.org US_238BDC8
+	.word US_238D3A0
+.org US_238BDE0
+	.word US_238D440
+	.word US_238D3F8
+.close
+
+; -----------------
 ; Patch: Show a button icon next to the move names indicating which button each move is associated with
 ; (replaces the checkmark that used to indicate that a move was set)
 ; -----------------

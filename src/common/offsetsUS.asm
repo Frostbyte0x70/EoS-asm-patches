@@ -21,6 +21,7 @@ ov_29 equ 0x022DC240
 ov_11 equ 0x022DC240
 ov_13 equ 0x0238A140
 ov_31 equ 0x02382820
+ov_18 equ 0x0238A140
 ov_36 equ 0x023A7080 ; Extra overlay
 
 ; arm9.bin
@@ -136,6 +137,14 @@ ov_36 equ 0x023A7080 ; Extra overlay
 ; overlay_0031.bin
 .definelabel US_2385798, 0x2385798
 .definelabel US_23857A4, 0x23857A4
+
+; overlay_0018.bin
+.definelabel US_238BDC8, 0x238BDC8
+.definelabel US_238BDE0, 0x238BDE0
+.definelabel US_238D3A0, 0x238D3A0
+.definelabel US_238D3F8, 0x238D3F8
+.definelabel US_238D440, 0x238D440
+
 
 ; Functions
 	; arm9.bin
