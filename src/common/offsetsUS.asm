@@ -46,6 +46,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_2004868, 0x2004868
 .definelabel EU_201367C, 0x20135D4
 .definelabel EU_20136A4, 0x20135FC
+.definelabel US_2040FA8, 0x2040FA8
 .definelabel EU_204ADD0, 0x204AA98
 .definelabel EU_204D74C, 0x204D414
 .definelabel EU_204D944, 0x204D60C
@@ -139,6 +140,9 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel US_23857A4, 0x23857A4
 
 ; overlay_0018.bin
+.definelabel US_238B850, 0x238B850
+.definelabel US_238B864, 0x238B864
+.definelabel US_238B888, 0x238B888
 .definelabel US_238BDC8, 0x238BDC8
 .definelabel US_238BDE0, 0x238BDE0
 .definelabel US_238D3A0, 0x238D3A0

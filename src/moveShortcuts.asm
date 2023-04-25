@@ -213,6 +213,23 @@ afterShortcuts:
 ; Remove "Set move"/"Deselect" options from Electivire menus
 ; -----------------
 .open "overlay_0018.bin", ov_18
+.org US_238B850
+	ldr r5,[r1]
+	add r5,r5,300h
+	ldrsh r0,[r5,8Ch]
+.org US_238B864
+	beq . + 1Ch 
+	subne r5,r5,1h
+	bl US_2040FA8
+	cmp r0,0h
+	ldrne r4,[pc,564h]
+	ldreq r4,[pc,564h]
+	b . + 8h
+	ldr r4,[pc,560h]
+.org US_238B888
+	mov r0,r0
+	mov r1,r2
+	add r5,r5,94h
 .org US_238BDC8
 	.word US_238D3A0
 .org US_238BDE0
