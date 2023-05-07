@@ -126,6 +126,8 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_23118E0, 0x23118E0
 .definelabel EU_231873C, 0x231873C
 .definelabel EU_23187A0, 0x23187A0
+.definelabel EU_2340E48, 0x2340E48
+.definelabel EU_2341008, 0x2341008
 .definelabel EU_2344A54, 0x2344A54
 .definelabel EU_2344AA0, 0x2344AA0
 .definelabel EU_234C2FC, 0x234C2FC
@@ -160,6 +162,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 	.definelabel fn_EU_22F399C,                 0x22F399C
 	.definelabel fn_EU_230DB90,                 0x230DB90
 	.definelabel fn_hideMap,                    0x233AE2C
+	.definelabel GenerateMaze,                  0x234103C
 	.definelabel fn_sendMessageWithIDCheckULog, 0x234BEA4
 
 ; Other
