@@ -19,8 +19,9 @@
 ; floor will be turned into a maze made up of walls.
 
 ; This file is intended to be used with armips v0.11
+; The patch "ExtraSpace.asm" must be applied before this one
 ; Required ROM: Explorers of Sky (EU/US)
-; Required files: overlay_0029.bin
+; Required files: overlay_0029.bin, overlay_0036.bin
 
 .nds
 .include "common/regionSelect.asm"
@@ -34,11 +35,18 @@
 ; Mark rooms where a wall maze has been generated as inelegible for secondary terrain generation. This stops the game from generating both a maze and water/lava lakes,
 ; which can make some tiles unreachable, potentially softlocking the player if the stairs happen to be there.
 .org EU_2341008
+	bl hook
+	; Restore the original code that might have been removed by an oldder version of this patch
+	b . + 20h
+
+.close
+
+.open "overlay_0036.bin", ov_36
+.orga 0x13F0
 .area 0x8
-	; This overwrites the loop's break instruction, but it doesn't matter because only a maximum of one room is chosen to spawn a maze every floor
-	; Another instruction could be fit in here by removing the branch at EU_2341000 and using conditional suffixes instead
+hook:
 	strb r1,[r0,1Dh] ; Disable the byte that allows generating secondary terrain in this room
-	bl GenerateMaze
+	b GenerateMaze
 .endarea
 
 .close
