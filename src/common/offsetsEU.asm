@@ -23,10 +23,10 @@ ov_13 equ 0x0238AC80
 ov_36 equ 0x023A7080 ; Extra overlay
 
 ; arm9.bin
-.definelabel EU_20011F0, 0x20011F0
 .definelabel EU_2001238, 0x2001238
 .definelabel EU_20015B8, 0x20015B8
 .definelabel EU_20015DC, 0x20015DC
+.definelabel EU_2002E98, 0x2002E98
 .definelabel EU_20040F8, 0x20040F8
 .definelabel EU_2004158, 0x2004158
 .definelabel EU_200415C, 0x200415C
@@ -44,6 +44,8 @@ ov_36 equ 0x023A7080 ; Extra overlay
 .definelabel EU_2004868, 0x2004868
 .definelabel EU_201367C, 0x201367C
 .definelabel EU_20136A4, 0x20136A4
+.definelabel EU_201D5C4, 0x201D5C4
+.definelabel EU_201D5F0, 0x201D5F0
 .definelabel EU_204ADD0, 0x204ADD0
 .definelabel EU_204D74C, 0x204D74C
 .definelabel EU_204D944, 0x204D944
