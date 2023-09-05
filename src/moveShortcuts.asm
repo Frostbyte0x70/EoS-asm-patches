@@ -212,18 +212,8 @@ afterShortcuts:
 	
 	; The address of the text representing the icon to show has to end up in r8. In this case, we use a string stored down here
 	; that we modify depending on the index of the current move (stored in r9)
-	add r8,=@@buttonIcon
-	mov r0,'2'
-	add r0,r0,r9
-	strb r0,[r8,4h] ; Replace the '?' character
-	
-	mov r0,r6 ; From the original code
-	b EU_20136A4 ; Resume normal execution
-	
-	@@buttonIcon:
-	; The '?' is replaced at runtime with 2-5 depending on the index of the move
-	.ascii "[M:B?]", 0
-	.align 4
+	b modifyButtonIcon
+
 .endarea
 ; Move down a couple of instructions from the original code so we can get extra space
 .org EU_20136A4
@@ -239,7 +229,7 @@ afterShortcuts:
 .open "overlay_0036.bin", ov_36
 
 .org ov_36+500h
-.area ov_36+62Ch - (ov_36+500h)
+.area ov_36+68Dh - (ov_36+500h)
 
 showMoveDB: ; Shows the move dialogue box, if hidden
 	push r4,lr
@@ -305,6 +295,8 @@ hookHideMove:
 checkMoveHook: ; Checks if the selected move exists and is not part of a link combo
 	push lr
 	add r0,r9,r4,lsl 3h
+
+	; Check flags0 (0x0 in move struct)
 	ldrb r1,[r0,124h]
 	tst r1,1h ; Exists
 	addeq sp,sp,4h
@@ -312,6 +304,22 @@ checkMoveHook: ; Checks if the selected move exists and is not part of a link co
 	tst r1,2h ; Is Linked
 	addne sp,sp,4h
 	bne EU_22F3324 ; Don't use if it's linked to the previous move
+	tst r1,20h ; Disabled
+	addne sp,sp,4h
+	bne EU_22F3324 ; Don't use if it's disabled
+
+	; Check flags2 (0x2 in move struct)
+	ldrb r1,[r0,126h]
+	tst r1, 1h ; Is sealed
+	addne sp,sp,4h
+	bne EU_22F3324 ; Don't use if it's sealed
+
+	; Check PP (0x6 in move struct)
+	ldrb r1,[r0,12Ah]
+	cmp r1,0h
+	addeq sp,sp,4h
+	beq EU_22F3324 ; Don't use if it has no PP left
+
 	bl hideMoveDB
 	mov r3,0h
 	pop pc
@@ -326,6 +334,24 @@ hookHideMoveStench:
     cmp r4,0h
     pop r4,pc
 
+modifyButtonIcon:
+	cmp r9, #4 ; If the move index is 4 or higher, we're learning a new move
+	addlt r8,=@@buttonIcon
+	movlt r0,'2'
+	addlt r0,r0,r9
+	strltb r0,[r8,4h] ; Replace the '?' character
+
+	addge r8,=@@nobuttonIcon ; Shift the text right instead of showing an icon
+	
+	mov r0,r6 ; From the original code
+	b EU_20136A4 ; Resume normal execution
+
+@@buttonIcon:
+	; The '?' is replaced at runtime with 2-5 depending on the index of the move
+	.ascii "[M:B?]", 0
+@@nobuttonIcon:
+	; Empty string that shifts the text right to account for the correct alignment
+	.ascii "[CLUM_SET:19]", 0
 .endarea
 
 .close
