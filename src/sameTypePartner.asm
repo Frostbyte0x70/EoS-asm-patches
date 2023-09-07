@@ -18,7 +18,7 @@
 ; This hack allows selecting a partner with the same type as the hero after the personality test
 
 ; This file is intended to be used with armips v0.11
-; Required ROM: Explorers of Sky (EU/US)
+; Required ROM: Explorers of Sky (EU/US/JP)
 ; Required files: overlay_0013.bin
 
 .nds

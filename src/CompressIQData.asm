@@ -20,7 +20,7 @@
 ; WARNING: If applied, any changes manually made to this data will be lost
 
 ; This file is intended to be used with armips v0.11
-; Required ROM: Explorers of Sky (EU/US)
+; Required ROM: Explorers of Sky (EU/US/JP)
 ; Required files: arm9.bin, overlay_0029.bin
 
 .nds

@@ -20,7 +20,7 @@
 
 ; This file is intended to be used with armips v0.11
 ; The patch "ExtraSpace.asm" must be applied before this one
-; Required ROM: Explorers of Sky (EU/US)
+; Required ROM: Explorers of Sky (EU/US/JP)
 ; Required files: arm9.bin, overlay_0029.bin, overlay_0036.bin
 
 .nds
@@ -162,7 +162,7 @@ afterShortcuts:
 ; Prevent passing turn by pressing A+B if the move dialogue box is open
 ; -----------------
 .org EU_22F1D18
-.area 0x30 ; 0x22F1D44 - .
+.area 0x30
 	ldr r0,=move_shown
 	ldr r0,[r0]
 	mvn r1,1h
@@ -179,7 +179,7 @@ afterShortcuts:
 .endarea
 
 .org EU_22F23CC
-.area 0x30 ; 0x22F23F8 - .
+.area 0x30
 	ldr r0,=move_shown
 	ldr r0,[r0]
 	mvn r1,1h

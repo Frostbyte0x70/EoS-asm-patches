@@ -23,7 +23,7 @@
 ; US: 0x234CEF4 ~ 0x234CF5C (overlay_0029.bin), 0x204D250 ~ 0x204D2D8 (arm9.bin)
 
 ; This file is intended to be used with armips v0.11
-; Required ROM: Explorers of Sky (EU/US)
+; Required ROM: Explorers of Sky (EU/US/JP)
 ; Required files: arm9.bin, overlay_0029.bin
 
 .nds
