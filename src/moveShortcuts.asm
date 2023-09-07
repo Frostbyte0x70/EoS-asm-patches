@@ -162,7 +162,7 @@ afterShortcuts:
 ; Prevent passing turn by pressing A+B if the move dialogue box is open
 ; -----------------
 .org EU_22F1D18
-.area 0x22F1D44 - .
+.area 0x30 ; 0x22F1D44 - .
 	ldr r0,=move_shown
 	ldr r0,[r0]
 	mvn r1,1h
@@ -170,8 +170,8 @@ afterShortcuts:
 	bne EU_22F1D64
 	; Original code, optimized
 	ldr r1,[sp,8Ch]
-	ldrh r0,[r1,46h]
-	ldrh r1,[r1,48h]
+	ldrh r0,[r1,BellyOffset]
+	ldrh r1,[r1,BellyOffset+2]
 	orrs r0,r0,r1 ; OR the belly and belly thousandths together to check if they are both zero
 	b @@afterPool
 .pool
@@ -179,7 +179,7 @@ afterShortcuts:
 .endarea
 
 .org EU_22F23CC
-.area 0x22F23F8 - .
+.area 0x30 ; 0x22F23F8 - .
 	ldr r0,=move_shown
 	ldr r0,[r0]
 	mvn r1,1h
@@ -187,8 +187,8 @@ afterShortcuts:
 	bne EU_22F2418
 	; Original code, optimized
 	ldr r1,[sp,8Ch]
-	ldrh r0,[r1,46h]
-	ldrh r1,[r1,48h]
+	ldrh r0,[r1,BellyOffset]
+	ldrh r1,[r1,BellyOffset+2]
 	orrs r0,r0,r1 ; OR the belly and belly thousandths together to check if they are both zero
 	b @@afterPool
 .pool
@@ -305,7 +305,7 @@ hookHideMove:
 checkMoveHook: ; Checks if the selected move exists and is not part of a link combo
 	push lr
 	add r0,r9,r4,lsl 3h
-	ldrb r1,[r0,124h]
+	ldrb r1,[r0,MoveBitfieldOffset]
 	tst r1,1h ; Exists
 	addeq sp,sp,4h
 	beq EU_22F3324 ; Don't use if it doesn't exist

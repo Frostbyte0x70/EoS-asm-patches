@@ -172,3 +172,10 @@ ov_36 equ 0x023A7080 ; Extra overlay
 
 ; Registers
 ApplyDamageAttackerRegister equ r10
+
+; Offsets
+BellyOffset equ 46h
+MoveBitfieldOffset equ 124h
+MoveIDOffset equ 128h
+EnemyEvoOffset equ 153h
+StatTableOffset equ 0F4h
