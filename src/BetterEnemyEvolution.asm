@@ -147,7 +147,7 @@ CheckSilentPP:
 
 ; -----------------
 ; Checks if a pokémon who just defeated another one that could still revive should evolve
-; r10 (r8 in US): Pointer to the entity struct of the pokémon who defeated another one. Can also be a placeholder struct if the fainted pokémon wasn't defeated by another one.
+; r10 (r8 in US and JP): Pointer to the entity struct of the pokémon who defeated another one. Can also be a placeholder struct if the fainted pokémon wasn't defeated by another one.
 ; -----------------
 EvolveWithRevive:
 	push lr
