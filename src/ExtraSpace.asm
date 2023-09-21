@@ -20,7 +20,7 @@
 ; The overlay must be present in the ROM already, this patch won't add it.
 
 ; This file is intended to be used with armips v0.11
-; Required ROM: Explorers of Sky (EU/US)
+; Required ROM: Explorers of Sky (EU/US/JP)
 ; Required files: arm9.bin, y9.bin
 ;	In addition, overlay_0036.bin must be present in the ROM with a size of 0x38F80 bytes.
 

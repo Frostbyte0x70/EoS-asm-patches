@@ -19,7 +19,7 @@
 ; This patch removes that restriction so they can be recruited in dungeons just like any other pokémon.
 
 ; This file is intended to be used with armips v0.11
-; Required ROM: Explorers of Sky (EU/US)
+; Required ROM: Explorers of Sky (EU/US/JP)
 ; Required files: overlay_0029.bin
 
 .nds

@@ -18,7 +18,7 @@
 ; Changes the behaviour of the Perish Song effect to leave the target at 1 HP instead of fainting it
 
 ; This file is intended to be used with armips v0.11
-; Required ROM: Explorers of Sky (EU/US)
+; Required ROM: Explorers of Sky (EU/US/JP)
 ; Required files: overlay_0029.bin
 
 .nds

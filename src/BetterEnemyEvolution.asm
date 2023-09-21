@@ -19,7 +19,7 @@
 
 ; This file is intended to be used with armips v0.11
 ; The patch "ExtraSpace.asm" must be applied before this one
-; Required ROM: Explorers of Sky (EU/US)
+; Required ROM: Explorers of Sky (EU/US/JP)
 ; Required files: overlay_0029.bin, overlay_0036.bin
 
 ; Patch parameters:
@@ -54,7 +54,7 @@ evolve:
 	; Access the table that contains the stats of the pokémon that spawn on this floor
 	ldr r6,=EU_2354138
 	ldr r6,[r6]
-	add r6,0F4h
+	add r6,StatTableOffset
 	add r6,3400h ; r6 = Start of the stats table
 	; Loop the entries in the table until we find the species we are looking for (or until we reach the end, although that shouldn't happen since
 	; the game won't try to evolve an enemy if its evolution can't be found in the current floor's enemy spawn table)
@@ -110,7 +110,7 @@ evolve:
 	ldrh r2,[r6,2h]
 	bl EU_2304544 ; Picks 4 moves given a species and its level and stores them in the buffer passed in r0
 	; Since ldrh doesn't accept a third parameter, we unroll this loop
-	add r5,r5,128h
+	add r5,r5,MoveIDOffset
 	ldrh r0,[sp]
 	strh r0,[r5]
 	ldrh r0,[sp,2h]
@@ -147,7 +147,7 @@ CheckSilentPP:
 
 ; -----------------
 ; Checks if a pokémon who just defeated another one that could still revive should evolve
-; r10 (r8 in US): Pointer to the entity struct of the pokémon who defeated another one. Can also be a placeholder struct if the fainted pokémon wasn't defeated by another one.
+; r10 (r8 in US and JP): Pointer to the entity struct of the pokémon who defeated another one. Can also be a placeholder struct if the fainted pokémon wasn't defeated by another one.
 ; -----------------
 EvolveWithRevive:
 	push lr
@@ -169,7 +169,7 @@ EvolveWithRevive:
 	; Set the required flags to allow this enemy to evolve
 	mov r0,1h
 	strb r0,[r2,0Fh]
-	strb r0,[r3,153h]
+	strb r0,[r3,EnemyEvoOffset]
 .endif
 @@ret:
 	mov r0,0h ; Original instruction

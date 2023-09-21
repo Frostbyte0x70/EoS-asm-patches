@@ -16,7 +16,7 @@
 ; ----------------------------------------------------------------------
 
 ; ########################
-; Specify the game region of the ROM you want to apply the patches to here. Valid values: "US" and "EU"
+; Specify the game region of the ROM you want to apply the patches to here. Valid values: "US", "EU", and "JP"
 _REGION equ "EU"
 ; ########################
 
@@ -26,6 +26,8 @@ _REGION equ "EU"
 	.notice "Applying patch for rom region: USA"
 .elseif _REGION == "EU"
 	.notice "Applying patch for rom region: EUROPE"
+.elseif _REGION == "JP"
+	.notice "Applying patch for rom region: JAPAN"
 .else
 	.error "Invalid region specified"
 .endif
