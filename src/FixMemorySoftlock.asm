@@ -30,7 +30,7 @@
 
 .open "overlay_0036.bin", ov_36
 .orga 0x780
-.area 0x94
+.area 0x9C
 
 ; -----------------
 ; Called when the game fails to load a sprite
@@ -48,14 +48,18 @@ memFailHook:
 	cmp r0,r1
 	moveq r2,1h
 	beq @@setDefaultSprite
-	; If it's none of those, let the game crash
-	ldr r0,=EU_20015B8 ; Original instruction
-	bx lr
+	; If it's none of those, return null and hope for the best
+	
+	; No idea what this is, but it must be called before exiting MemLocateSet or the game softlocks
+	ldr r0,=EU_20AF7A8
+	bl EU_2002E98
+	mov r0,0h
+	add sp,sp,20h
+	pop r3-r11,pc
 @@setDefaultSprite:
 	; Simulate a return from MemLocateSet
 	ldr r0,=EU_20AF7A8
 	push r2 ; We need this for the check ahead
-	; No idea what this is, but it must be called before exiting MemLocateSet or the game softlocks
 	bl EU_2002E98
 	pop r2
 	add sp,sp,20h
