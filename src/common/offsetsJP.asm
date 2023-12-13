@@ -23,7 +23,6 @@ ov_13 equ 0x0238B6A0
 ov_36 equ 0x023A7080 ; Extra overlay
 
 ; arm9.bin
-.definelabel EU_2000DC0, 0x2000DC0
 .definelabel EU_2001238, 0x2001238
 .definelabel EU_20015DC, 0x20015DC
 .definelabel EU_2002E98, 0x2002E98
@@ -138,7 +137,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 
 ; Functions
 	; arm9.bin
-	.definelabel fn_TaskProcBoot,               0x2003328
+	.definelabel fn_NitroMain,                  0x2000C6C
 	.definelabel fn_loadOverlayFallback,        0x2003D2C
 	.definelabel fn_EU_2008194,                 0x2008194
 	.definelabel fn_EU_2013AF8,                 0x2013A20

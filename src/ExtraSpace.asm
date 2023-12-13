@@ -203,7 +203,7 @@ SKIP_Y9 equ 0
 @ov36AlreadyLoaded:
 	.word 0 ; Set to 1 after loading our extra overlay. Has to be a word so we can directly load it with an ldr.
 @loadOverlay36:
-	sub sp,sp,10h
+	push lr
 	; Set the overlay loaded byte
 	mov r0,1h
 	str r0,[@ov36AlreadyLoaded]
@@ -219,25 +219,26 @@ SKIP_Y9 equ 0
 	; Load the overlay and continue to the end of the function
 	bl @loadOverlay
 
-	add sp,sp,10h
+	; Original instruction
+	mov r0, 0h
 
-	; Call the original function
-	b fn_TaskProcBoot
+	pop pc
 .endarea
 
 ; -----------------
-; This hook was used in the previous version of the patch, the overlay
-; no longer needs to be loaded here
+; These hooks were used in the previous version of the patch,
+; restore the original instructions
 ; -----------------
 .org EU_20042A8
-	blne @loadOverlay ; Previous version: bne @loadOverlay36
+	bne EU_20047A0 
 .org EU_20042B4
-	bl @loadOverlay   ; Previous version: b @loadOverlay36
+	b EU_20047A0
 
 ; -----------------
-; Hook the call to `TaskProcBoot`
+; Hook inside `NitroMain`, which is pretty early in the game's
+; initialization process
 ; -----------------
-.org EU_2000DC0
+.org fn_NitroMain+34h
 	bl @loadOverlay36
 .close
 
