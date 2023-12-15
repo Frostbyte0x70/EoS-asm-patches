@@ -203,15 +203,8 @@ SKIP_Y9 equ 0
 @ov36AlreadyLoaded:
 	.word 0 ; Set to 1 after loading our extra overlay. Has to be a word so we can directly load it with an ldr.
 @loadOverlay36:
-	; Finish loading the previous overlay
-	bl @loadOverlay
-	; Check if we loaded our overlay already. Since the game should never overwrite the RAM area where it's loaded, there's no need to load it
-	; a second time
-	ldr r0,[@ov36AlreadyLoaded]
-	cmp r0,0h
-	; If the overlay has been loaded already, skip to the end of the function
-	bne @endFunc
-	; Otherwise, set the overlay loaded byte
+	push lr
+	; Set the overlay loaded byte
 	mov r0,1h
 	str r0,[@ov36AlreadyLoaded]
 	; Now get the data for overlay 36 and load it
@@ -223,21 +216,29 @@ SKIP_Y9 equ 0
 	; If something went wrong, call the fallback function first
 	moveq r0,1h
 	bleq fn_loadOverlayFallback
-	; Load the overlay and continue to the end of the function
 	bl @loadOverlay
-	b @endFunc
+
+	; Original instruction
+	mov r0, 0h
+
+	pop pc
 .endarea
 
 ; -----------------
-; loadOverlay36 hook
-; We hook the code after the call to get the data for overlay 10 (the first overlay that is loaded in the RAM)
-; This way, our overlay will be loaded alongside it shortly after the game starts
+; These hooks were used in the previous version of the patch,
+; restore the original instructions
 ; -----------------
 .org EU_20042A8
-	bne @loadOverlay36
+	bne EU_20047A0
 .org EU_20042B4
-	b @loadOverlay36
+	b EU_20047A0
 
+; -----------------
+; Hook inside `NitroMain`, which is pretty early in the game's
+; initialization process
+; -----------------
+.org fn_NitroMain+34h
+	bl @loadOverlay36
 .close
 
 ; -----------------

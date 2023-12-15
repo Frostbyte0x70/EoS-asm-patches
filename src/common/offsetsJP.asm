@@ -137,6 +137,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 
 ; Functions
 	; arm9.bin
+	.definelabel fn_NitroMain,                  0x2000C6C
 	.definelabel fn_loadOverlayFallback,        0x2003D2C
 	.definelabel fn_EU_2008194,                 0x2008194
 	.definelabel fn_EU_2013AF8,                 0x2013A20
