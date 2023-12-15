@@ -216,7 +216,6 @@ SKIP_Y9 equ 0
 	; If something went wrong, call the fallback function first
 	moveq r0,1h
 	bleq fn_loadOverlayFallback
-	; Load the overlay and continue to the end of the function
 	bl @loadOverlay
 
 	; Original instruction
@@ -230,7 +229,7 @@ SKIP_Y9 equ 0
 ; restore the original instructions
 ; -----------------
 .org EU_20042A8
-	bne EU_20047A0 
+	bne EU_20047A0
 .org EU_20042B4
 	b EU_20047A0
 
