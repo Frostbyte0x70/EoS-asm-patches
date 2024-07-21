@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2023 End45
+; Copyright © 2023 Frostbyte0x70
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -140,38 +140,38 @@ ov_36 equ 0x023A7080 ; Extra overlay
 
 ; Functions
 	; arm9.bin
-	.definelabel fn_NitroMain,                  0x2000C6C
-	.definelabel fn_loadOverlayFallback,        0x2003D2C
-	.definelabel fn_EU_2008194,                 0x2008194
-	.definelabel fn_EU_2013AF8,                 0x2013A50
-	.definelabel fn_EU_2025B90,                 0x20258C4
-	.definelabel fn_deleteMoveMenu,             0x2030850
-	.definelabel fn_setMoveData,                0x203F9CC
-	.definelabel fn_createMoveMenu,             0x204018C
-	.definelabel fn_deallocMoveMenu,            0x20407C0
-	.definelabel fn_getGroundVar,               0x204B4EC
-	.definelabel fn_getPerfomanceProgress,      0x204CA94
-	.definelabel fn_addExtraPokemon,            0x204F8E0
-	.definelabel CanEnemyEvolve,                0x2051400
-	.definelabel fn_getSpeciesIQGroup,          0x2052B28
-	.definelabel fn_getOverlayData,             0x207FC9C
-	.definelabel fn_loadOverlayInRam,           0x207FD98
-	.definelabel fn_EU_2080254,                 0x207FEBC
+	.definelabel NitroMain,                  0x2000C6C
+	.definelabel LoadOverlayFallback,        0x2003D2C
+	.definelabel EU_2008194,                 0x2008194
+	.definelabel EU_2013AF8,                 0x2013A50
+	.definelabel EU_2025B90,                 0x20258C4
+	.definelabel DeleteMoveMenu,             0x2030850
+	.definelabel SetMoveData,                0x203F9CC
+	.definelabel CreateMoveMenu,             0x204018C
+	.definelabel DeallocMoveMenu,            0x20407C0
+	.definelabel GetGroundVar,               0x204B4EC
+	.definelabel GetPerfomanceProgress,      0x204CA94
+	.definelabel AddExtraPokemon,            0x204F8E0
+	.definelabel CanEnemyEvolve,             0x2051400
+	.definelabel GetSpeciesIQGroup,          0x2052B28
+	.definelabel GetOverlayData,             0x207FC9C
+	.definelabel LoadOverlayInRam,           0x207FD98
+	.definelabel EU_2080254,                 0x207FEBC
 
 	; overlay_0029.bin
-	.definelabel fn_EU_22E15F8,                 0x22E0CB8
-	.definelabel fn_waitFrame,                  0x22E9FE0
-	.definelabel fn_setDispMode,                0x22EA428
-	.definelabel EvolveMonster,                 0x2303C7C
-	.definelabel RestoreMovePP,                 0x2317C20
-	.definelabel fn_EU_22F399C,                 0x22F2FE4
-	.definelabel fn_EU_230DB90,                 0x230D11C
-	.definelabel fn_hideMap,                    0x233A248
-	.definelabel GenerateMaze,                  0x2340458
-	.definelabel fn_sendMessageWithIDCheckULog, 0x234B2A4
+	.definelabel EU_22E15F8,                 0x22E0CB8
+	.definelabel WaitFrame,                  0x22E9FE0
+	.definelabel SetDispMode,                0x22EA428
+	.definelabel EvolveMonster,              0x2303C7C
+	.definelabel RestoreMovePP,              0x2317C20
+	.definelabel EU_22F399C,                 0x22F2FE4
+	.definelabel EU_230DB90,                 0x230D11C
+	.definelabel HideMap,                    0x233A248
+	.definelabel GenerateMaze,               0x2340458
+	.definelabel SendMessageWithIDCheckULog, 0x234B2A4
 
 ; Other
-.definelabel EU_237D294, 237C694h
+.definelabel EU_237D294, 0x237C694
 
 ; Registers
 ApplyDamageAttackerRegister equ r8

@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2022 End45
+; Copyright © 2022 Frostbyte0x70
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ afterShortcuts:
 .org EU_22F26EC
 .area EU_22F2748 - EU_22F26EC
 ; Original code shifted up 8 instructions
-	bl fn_EU_22E15F8
+	bl EU_22E15F8
 	cmp r0,0h
 	beq @L1
 	mov r0,0h
@@ -205,7 +205,7 @@ afterShortcuts:
 .org EU_201367C
 .area EU_20136A4 - EU_201367C
 	; Reorder and optimize some instructions from the original code
-	bl fn_EU_2025B90
+	bl EU_2025B90
 	str r0,[sp]
 	
 	; Available registers: r0, r1, r5
@@ -227,7 +227,7 @@ afterShortcuts:
 .endarea
 ; Move down a couple of instructions from the original code so we can get extra space
 .org EU_20136A4
-	bl fn_EU_2013AF8
+	bl EU_2013AF8
 	add r1,r13,10h
 	;str r5 [r13] - No longer needed since we stored this before
 	
@@ -251,22 +251,22 @@ showMoveDB: ; Shows the move dialogue box, if hidden
 	bne @@ret
 	mov r0,6h
 	mov r1,0h
-	bl fn_setDispMode
+	bl SetDispMode
 	mov r0,0h
-	bl fn_hideMap
+	bl HideMap
 	mov r0,62h
-	bl fn_waitFrame
+	bl WaitFrame
 	mov r0,62h
-	bl fn_waitFrame
+	bl WaitFrame
 	ldr r0,=0x0A120202
 	ldr r1,=EU_209CE8C
 	str r0,[r1]
 	mov r0,r4
-	bl fn_setMoveData
+	bl SetMoveData
 	mov r0,7h
 	mov r1,0h
 	mov r2,0h
-	bl fn_createMoveMenu
+	bl CreateMoveMenu
 	ldr r1,=move_shown
 	str r0,[r1]
 @@ret:
@@ -280,15 +280,15 @@ hideMoveDB: ; Hides the move dialogue box, if shown
 	cmp r0,r2
 	beq @@ret
 	str r2,[r1]
-	bl fn_deleteMoveMenu
-	bl fn_deallocMoveMenu
+	bl DeleteMoveMenu
+	bl DeallocMoveMenu
 	mov r0,62h
-	bl fn_waitFrame
+	bl WaitFrame
 	mov r0,62h
-	bl fn_waitFrame
+	bl WaitFrame
 	mov r0,0h
 	mov r1,r0
-	bl fn_setDispMode
+	bl SetDispMode
 	ldr r0,=0x0A120D02
 	ldr r1,=EU_209CE8C
 	str r0,[r1]

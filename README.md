@@ -1,4 +1,4 @@
-# EoS-asm-hacks
+# EoS-asm-patches
 This repository contains my asm patches for Explorers of Sky.
 
 ## Usage

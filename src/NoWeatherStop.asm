@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2023 End45
+; Copyright © 2023 Frostbyte0x70
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -35,17 +35,17 @@ clearFlagAndCallDamageFunc:
 	push lr
 	mov r12,0h
 	str r12,[stopPlayerFlag]
-	bl fn_EU_230DB90 ; Some variant of CalcDamage
+	bl EU_230DB90 ; Some variant of CalcDamage
 	; Reset the flag, just in case the message didn't get printed in the end
 	mov r0,1h
 	str r0,[stopPlayerFlag]
 	pop pc
 
-; Contitionally calls fn_EU_22F399C depending on whether the stop player flag is set. Resets the flag to 1.
+; Contitionally calls EU_22F399C depending on whether the stop player flag is set. Resets the flag to 1.
 hook:
 	ldr r12,[stopPlayerFlag]
 	cmp r12,1h
-	beq fn_EU_22F399C ; Makes the player stop running, among other things
+	beq EU_22F399C ; Makes the player stop running, among other things
 	; Reset the flag and return
 	mov r12,1h
 	str r12,[stopPlayerFlag]

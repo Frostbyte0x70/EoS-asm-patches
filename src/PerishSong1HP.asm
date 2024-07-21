@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2021 End45
+; Copyright © 2021 Frostbyte0x70
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
 	mov r0,r5
 	bne @@noProtect
 	ldr r1,[EU_2311A60]
-	bl fn_sendMessageWithIDCheckULog
+	bl SendMessageWithIDCheckULog
 	b EU_23118E0
 @@noProtect:
 	mov r2,0Bh

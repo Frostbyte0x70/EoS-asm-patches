@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2021 End45
+; Copyright © 2021 Frostbyte0x70
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@
 canLearnSkill:
 	push r4,lr
 	mov r4,r1
-	bl fn_getSpeciesIQGroup
+	bl GetSpeciesIQGroup
 	ldr r1,=EU_20A2314
 	mov r2,9h
 	mla r0,r0,r2,r1
