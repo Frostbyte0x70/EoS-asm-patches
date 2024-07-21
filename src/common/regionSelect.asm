@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2020 End45
+; Copyright © 2020 Frostbyte0x70
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by

@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2021 End45
+; Copyright © 2021 Frostbyte0x70
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -77,12 +77,12 @@ SKIP_Y9 equ 0
 @loadOverlay:
 	push lr
 	add r0,sp,10h+4 ; We need to account for the extra register we pushed
-	bl fn_loadOverlayInRam
+	bl LoadOverlayInRam
 	cmp r0,0h
 	moveq r0,1h
-	bleq fn_loadOverlayFallback
+	bleq LoadOverlayFallback
 	add r0,sp,10h+4
-	bl fn_EU_2080254 ; Jumps to the static initializer addresses, among other things
+	bl EU_2080254 ; Jumps to the static initializer addresses, among other things
 	pop pc
 .endarea
 
@@ -166,7 +166,7 @@ SKIP_Y9 equ 0
 	bl @loadOverlay
 	; Move the end of the current function here
 @endFunc:
-	bl fn_EU_2008194
+	bl EU_2008194
 @return:
 	add sp,sp,3Ch
 	pop r3,r4,pc
@@ -211,11 +211,11 @@ SKIP_Y9 equ 0
 	mov r2,24h
 	add r0,sp,10h
 	mov r1,0h
-	bl fn_getOverlayData
+	bl GetOverlayData
 	cmp r0,0h
 	; If something went wrong, call the fallback function first
 	moveq r0,1h
-	bleq fn_loadOverlayFallback
+	bleq LoadOverlayFallback
 	bl @loadOverlay
 
 	; Original instruction
@@ -237,7 +237,7 @@ SKIP_Y9 equ 0
 ; Hook inside `NitroMain`, which is pretty early in the game's
 ; initialization process
 ; -----------------
-.org fn_NitroMain+34h
+.org NitroMain+34h
 	bl @loadOverlay36
 .close
 

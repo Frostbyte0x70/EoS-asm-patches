@@ -1,5 +1,5 @@
 ; ----------------------------------------------------------------------
-; Copyright © 2021 End45
+; Copyright © 2021 Frostbyte0x70
 ; 
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@
 	; Get the value of SIDE01_BOSS2ND
 	mov r0,0h
 	mov r1,10h
-	bl fn_getGroundVar
+	bl GetGroundVar
 	cmp r0,0h
 	bne end
 @@continue:
@@ -59,7 +59,7 @@
 	cmp r6,23h
 	bne @@addPokemon
 	mov r0,19h
-	bl fn_getPerfomanceProgress
+	bl GetPerfomanceProgress
 	cmp r0,0h
 	bne end
 @@addPokemon:
@@ -112,7 +112,7 @@ addExtraPokemon:
 	mla r2,r0,r3,r2 ; r2: Pointer to the additional pokémon entry
 	mov r0,r7
 	; The r1 parameter is already set
-	bl fn_addExtraPokemon
+	bl AddExtraPokemon
 	pop r3,pc
 
 .pool
