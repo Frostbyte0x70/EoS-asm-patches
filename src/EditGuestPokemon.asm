@@ -15,7 +15,7 @@
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ; ----------------------------------------------------------------------
 
-; This patch changes the way the game adds additional pokémon to the team during the first visit to some dungeons. Instead of using a hardcoded entry
+; This patch changes the way the game adds additional guest pokémon to the team during the first visit to some dungeons. Instead of using a hardcoded entry
 ; depending on the dungeon ID, it will pull the data from a table.
 
 ; This file is intended to be used with armips v0.11
@@ -67,12 +67,12 @@
 	ldrb r0,[r4]
 	and r0,r0,3Fh
 	mov r1,0h
-	bl addExtraPokemon
+	bl addGuestPokemon
 	; Second additional pokémon
 	ldrb r0,[r4,1h]
 	and r0,r0,3Fh
 	mov r1,1h
-	bl addExtraPokemon
+	bl addGuestPokemon
 	b end
 dungeonCompleted:
 	; Determine if the dungeon should have Hidden Land restrictions enabled once completed using the table instead of a hardcoded ID check
@@ -90,7 +90,7 @@ end:
 	pop r3-r7,pc
 
 ; -----------------
-; Looks up the extra pokémon data entry specified by r0 - 1 and adds that pokémon to the team as an additional team member.
+; Looks up the guest pokémon data entry specified by r0 - 1 and adds that pokémon to the team as an additional team member.
 ; The index in r0 will be used to address the table containing this data if the index is <= 12h, or to address the second
 ; table crated by this patch to hold extra entries if the index is > 12h.
 ; Parameters:
@@ -98,7 +98,7 @@ end:
 ;	r1: 0 if this is the first pokémon added, 1 if it's the second
 ;	r7: Pointer to the dungeon properties structure
 ; -----------------
-addExtraPokemon:
+addGuestPokemon:
 	push r3,lr
 	cmp r0,0h
 	popeq pc,r3 ; Empty entry
@@ -112,7 +112,7 @@ addExtraPokemon:
 	mla r2,r0,r3,r2 ; r2: Pointer to the additional pokémon entry
 	mov r0,r7
 	; The r1 parameter is already set
-	bl AddExtraPokemon
+	bl AddGuestMonster
 	pop r3,pc
 
 .pool
@@ -125,12 +125,12 @@ dungeonEntries:
 ; Entry format (little-endian): ABXXXXXX CDYYYYYY
 ;	A: 1 if Hidden Land restrictions should be enabled during the first visit
 ;	B: 1 to force disable recruitment
-;	C: If 1, the extra pokémon will only be added to your team if SIDE01_BOSS2ND is 0
+;	C: If 1, the guest pokémon will only be added to your team if SIDE01_BOSS2ND is 0
 ;	D: 1 if Hidden Land restrictions should be enabled after the dungeon is cleared
 ;	XXXXXX: Additional pokémon data index for the first pokémon added to your team + 1. The index will be used
 ;	to address the additional data entry. The first 18 will be at the same location as in the original game,
 ;	the next will be added in the extra space after this table.
-;	A value of 0 means that no extra pokémon will be added to the team.
+;	A value of 0 means that no guest pokémon will be added to the team.
 ;	YYYYYY: Additional pokémon data index for the second pokémon added to your team + 1.
 ;	Follows the same format as XXXXX
 .byte \

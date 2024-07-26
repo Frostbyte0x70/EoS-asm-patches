@@ -151,7 +151,7 @@ ov_36 equ 0x023A7080 ; Extra overlay
 	.definelabel DeallocMoveMenu,            0x20407C0
 	.definelabel GetGroundVar,               0x204B4EC
 	.definelabel GetPerfomanceProgress,      0x204CA94
-	.definelabel AddExtraPokemon,            0x204F8E0
+	.definelabel AddGuestMonster,            0x204F8E0
 	.definelabel CanEnemyEvolve,             0x2051400
 	.definelabel GetSpeciesIQGroup,          0x2052B28
 	.definelabel GetOverlayData,             0x207FC9C

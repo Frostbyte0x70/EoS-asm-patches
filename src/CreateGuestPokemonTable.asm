@@ -15,9 +15,9 @@
 ; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ; ----------------------------------------------------------------------
 
-; This patch can be used to automatically create the dungeon data table needed for the EditExtraPokemon patch by calling the function that
+; This patch can be used to automatically create the dungeon data table needed for the EditGuestPokemon patch by calling the function that
 ; runs before going into a dungeon repeatedly with all the possible dungeon IDs.
-; Applying this patch will break the game, make sure to have a backup
+; Applying this patch will break the game, make sure to have a backup.
 
 ; This file is intended to be used with armips v0.11
 ; Required ROM: Explorers of Sky (EU)
