@@ -46,7 +46,7 @@ NoCashCheck:
     push r1,r2
     ldr r1,=0x4FFFA00 ; No$GBA writes the string "no$gba <version number>" to this address for debugging purposes. this patch checks for that string to determine if we're running on no$.
     ldr r1,[r1]
-    ldr r2,0x67246F6E ; ASCII for "no$g"
+    ldr r2,=0x67246F6E ; ASCII for "no$g"
     cmp r1,r2
     pop r1,r2
     bx lr
